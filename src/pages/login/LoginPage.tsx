@@ -14,7 +14,7 @@ export default function LoginPage() {
     const [formValues, setFormValues] = useState<ILogin>({
         email: '',
         password: '',
-        save: false
+        save: false,
     });
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormValues((currentFormValues) => ({
@@ -29,47 +29,50 @@ export default function LoginPage() {
         onLogin();
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.checked)
+        console.log(event.target.checked);
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
             [event.target.name]: event.target.checked,
         }));
         console.log(formValues);
-        };
-    
-
+    };
     const { email, password } = formValues;
     const buttonDisabled = !email || !password;
     return (
         <Layout>
-        <div className='loginPage'>
-            <h1 className='loginPage-title'>Login</h1>
-            <Form id='login-form'variant='column'>
-                <FormField
-                    customheight="38px"
-                    type='text'
-                    name='email'
-                    id='email'
-                    onChange={handleChange}
-                />
-                <FormField
-                    customheight="38px"  
-                    type='password'
-                    name='password'
-                    id='password'
-                    onChange={handleChange}
-                />
-                <RawSwitch Name='save' checked={true} onChange={handleSwitchChange} Rightname='Guardar contraseña' />
-                <Button
-                    type='submit'
-                    disabled={buttonDisabled}
-                    className='loginButton'
-                    onClick={handleSubmit}
-                >
-                    Login
-                </Button>
-            </Form>
-        </div>
+            <div className='loginPage'>
+                <h1 className='loginPage-title'>Login</h1>
+                <Form id='login-form' variant='column'>
+                    <FormField
+                        customheight='38px'
+                        type='text'
+                        name='email'
+                        id='email'
+                        onChange={handleChange}
+                    />
+                    <FormField
+                        customheight='38px'
+                        type='password'
+                        name='password'
+                        id='password'
+                        onChange={handleChange}
+                    />
+                    <RawSwitch
+                        Name='save'
+                        checked={true}
+                        onChange={handleSwitchChange}
+                        Rightname='Guardar contraseña'
+                    />
+                    <Button
+                        type='submit'
+                        disabled={buttonDisabled}
+                        className='loginButton'
+                        onClick={handleSubmit}
+                    >
+                        Login
+                    </Button>
+                </Form>
+            </div>
         </Layout>
     );
 }

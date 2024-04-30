@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './shitch.css'
+import './switch.css'
 interface ISwitch{ 
     checked: boolean;
     onChange:(event:React.ChangeEvent<HTMLInputElement>) => void

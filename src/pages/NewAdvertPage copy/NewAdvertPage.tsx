@@ -8,22 +8,20 @@ import RawSwitch from '../../components/shared/Switch.tsx';
 import Select from '../../components/shared/Select.tsx';
 import getTags from '../../components/layout/services.ts';
 import { postAd } from './services.ts';
-import { client } from '../../utils/api/client.ts';
 
 export default function NewAdvertPage() {
     const [optionTags, setTags] = useState<string[]>([]);
     const [formValues, setFormValues] = useState({
         name: '',
-        price: 0,
+        price: '',
         tags: '',
         sale: false,
-        photo: '',
     });
 
-    client.defaults.headers.post['Content-Type'] = 'multipart/form-data';
     const { name, price, tags, sale } = formValues;
 
     const buttonDisabled = !name || !price || !tags.length;
+    console.log(photo);
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
@@ -43,27 +41,13 @@ export default function NewAdvertPage() {
         }));
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.checked);
+        console.log(event.target.checked)
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
             [event.target.name]: event.target.checked,
         }));
         console.log(formValues);
-    };
-    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files && event.target.files[0];
-        if (file) {
-            console.log(file);
-            const formData = new FormData();
-            formData.append('photo', file);
-
-            setFormValues((currentFormValues) => ({
-                ...currentFormValues,
-                [event.target.name]: file,
-            }));
-            console.log(file);
-        }
-    };
+        };
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         await postAd(formValues);
@@ -123,16 +107,10 @@ export default function NewAdvertPage() {
                         type='file'
                         name='photo'
                         id='photo'
-                        onChange={handleFileUpload}
+                        onChange={handleChange}
                     />
-                    <RawSwitch
-                        Name='sale'
-                        Leftname='Venta'
-                        Rightname='Compra'
-                        checked={sale}
-                        onChange={handleSwitchChange}
-                    />
-
+                    <RawSwitch  checked={buysell} onChange={handleSwitchChange} />
+                            
                     <div className='buttonWrapper'>
                         <Button
                             type='button'

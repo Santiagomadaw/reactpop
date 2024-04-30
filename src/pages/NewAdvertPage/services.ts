@@ -1,6 +1,13 @@
 import { client } from "../../utils/api/client";
-import { ILogin } from "../../interfaces/interfaces";
-export const postAd = async (formvalues: ILogin) => {
+export interface IAdsPost {
+  name: string;
+  sale: boolean;
+  price: number;
+  tags: string;
+  photo?: string;
+}
+
+export const postAd = async (formvalues: IAdsPost) => {
   console.log(formvalues)
     try {
         await client.post('/api/v1/adverts', formvalues);

@@ -7,5 +7,10 @@
 
 }
 .buttonWrapper{
+    display: flex;
+    gap: 4px;
+    align-items: center;
     width: 100%;
+    
+
 }
