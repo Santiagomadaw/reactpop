@@ -53,15 +53,12 @@ export default function NewAdvertPage() {
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         if (file) {
-            console.log(file);
             const formData = new FormData();
             formData.append('photo', file);
-
             setFormValues((currentFormValues) => ({
                 ...currentFormValues,
                 [event.target.name]: file,
             }));
-            console.log(file);
         }
     };
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {

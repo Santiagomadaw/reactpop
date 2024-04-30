@@ -1,0 +1,64 @@
+
+
+
+.advert{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 680px;
+    max-width: 90%;
+    background-color: var(--bg-300);
+    padding: 20px 10px;
+    border-radius: 10px;
+    gap:10px;
+    margin: 0 auto;
+}
+.priceNameBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+
+}
+.img-container{
+    margin-bottom: 20px;
+    display: flex;
+    width: 640px;
+    max-width: 96%;
+    height: 480px;
+    border-radius: 10px;
+    align-items: center;
+    background:var(--accent-100);
+    overflow: hidden;
+    & img {
+        width: auto;
+        height: auto;
+        max-width: none; 
+        max-height: none;
+        min-width: 100%; 
+        min-height: 100%;
+        object-fit: cover;
+        
+    }
+    
+}
+
+
+.tags-container{
+    width: 100%;
+    display: flex;
+    gap: 4px;
+    & .tagLink{
+        text-align: center;
+        padding: 3px 5px;
+        border-radius: 3px;
+        color: var(--primary-300);
+        width:fit-content;
+        background: var(--primary-100);
+    }
+}
+
+
+
+
+

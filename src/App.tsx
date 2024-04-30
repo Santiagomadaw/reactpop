@@ -5,6 +5,7 @@ import LoginPage from './pages/login/LoginPage.tsx';
 import AdvertsPage from './pages/AdvertsPage/advertsPage.tsx';
 import { useAuth } from './context/authcontext/authCustomHook.ts';
 import NewAdvertPage from './pages/NewAdvertPage/NewAdvertPage.tsx';
+import AdvertPage from './pages/AdvertPage/advertPage.tsx';
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
                 />
                 <Route
                     path=':adId'
-                    element={<RequireAuth>{' <AdvertPage />'}</RequireAuth>}
+                    element={<RequireAuth><AdvertPage /></RequireAuth>}
                 />
                 <Route
                     path='new'

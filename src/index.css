@@ -13,12 +13,7 @@ body{
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background:var(--bg-200);
-  color:var(--text-100);
-
-}
-
-a{
+  background-image: linear-gradient(to right top, #051937, #171d35, #212232, #282830, #2e2e2e);a{
   text-decoration: none;
   color:inherit;
 }
