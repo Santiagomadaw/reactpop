@@ -1,0 +1,44 @@
+/* Common styles */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
+    z-index: 2;
+    background: var(--bg-300);
+    border-bottom: 1px solid grey;
+    position: sticky;
+    top: 0;
+    padding: 10px 3%;
+    color: var(--primary-100);
+
+    h1 {
+        font-family: 'Grandstander', cursive;
+        font-weight: 900;
+        span {
+            font-size: 40px;
+        }
+    }
+    ul {
+        display: flex;
+        gap: 3px;
+        margin: 0;
+        li {
+            list-style-type: none;
+            min-width: fit-content;
+        }
+    }
+}
+
+@media (max-width: 1280px) {
+    .header {
+        height: 15vh;
+        flex-direction: column;
+        gap: 5px;
+        padding: 0px 40px;
+        #search {
+            width: 100%;
+        }
+    }
+}
+
