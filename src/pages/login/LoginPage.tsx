@@ -7,12 +7,14 @@ import { useAuth } from '../../context/authcontext/authCustomHook.ts';
 import Layout from '../../components/layout/Layout.tsx';
 import FormField from '../../components/shared/FormField.tsx';
 import { ILogin } from '../../interfaces/interfaces.ts';
+import RawSwitch from '../../components/shared/Switch.tsx';
 
 export default function LoginPage() {
     const { onLogin } = useAuth();
     const [formValues, setFormValues] = useState<ILogin>({
         email: '',
         password: '',
+        save: false
     });
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormValues((currentFormValues) => ({
@@ -26,6 +28,15 @@ export default function LoginPage() {
         await login(formValues);
         onLogin();
     };
+    const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.checked)
+        setFormValues((currentFormValues) => ({
+            ...currentFormValues,
+            [event.target.name]: event.target.checked,
+        }));
+        console.log(formValues);
+        };
+    
 
     const { email, password } = formValues;
     const buttonDisabled = !email || !password;
@@ -48,7 +59,7 @@ export default function LoginPage() {
                     id='password'
                     onChange={handleChange}
                 />
-                
+                <RawSwitch Name='save' checked={true} onChange={handleSwitchChange} Rightname='Guardar contraseña' />
                 <Button
                     type='submit'
                     disabled={buttonDisabled}

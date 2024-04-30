@@ -7,8 +7,9 @@ export const login = async (formvalues: ILogin) => {
         const { accessToken } = response.data;
 
         setAuthorizationHeader(accessToken)
-
-        localStorage.setItem('auth', accessToken)
+        if(formvalues.save){
+            localStorage.setItem('auth', accessToken)
+        }
     } catch (error) {
         console.log(error)
     }

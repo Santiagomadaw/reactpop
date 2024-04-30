@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
       <BrowserRouter>
         <LogContextProvider defaultState={!!accessToken}>
-        <FilterContextProvider children={ <App />} filters={undefined}>
+        <FilterContextProvider children={ <App />} filters={{ search: '', tags: [], buysell: 'all' }}>
         </FilterContextProvider>
         </LogContextProvider>
       </BrowserRouter>

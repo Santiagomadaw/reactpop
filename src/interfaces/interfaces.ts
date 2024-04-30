@@ -12,6 +12,7 @@ export interface IAds {
 export interface ILogin {
     email: string;
     password: string;
+    save: boolean;
 }
 export interface IpropsFilter {
     search: string;
