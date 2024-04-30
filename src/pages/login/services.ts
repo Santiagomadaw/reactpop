@@ -1,4 +1,4 @@
-import { client, setAuthorizationHeader,removeAuthorizationHeader } from "../../utils/api/client";
+import { client, setAuthorizationHeader, removeAuthorizationHeader } from "../../utils/api/client";
 import { ILogin } from "../../interfaces/interfaces";
 
 export const login = async (formvalues: ILogin) => {
@@ -8,8 +8,8 @@ export const login = async (formvalues: ILogin) => {
 
         setAuthorizationHeader(accessToken)
 
-/*         localStorage.setItem('auth', accessToken)
- */    } catch (error) {
+        localStorage.setItem('auth', accessToken)
+    } catch (error) {
         console.log(error)
     }
 }

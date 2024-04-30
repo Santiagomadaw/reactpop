@@ -2,8 +2,13 @@ import './App.css';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import RequireAuth from './components/auth/requireAuth.tsx';
 import LoginPage from './pages/login/LoginPage.tsx';
+import AdvertsPage from './pages/AdvertsPage/advertsPage.tsx';
+import { useAuth } from './context/authcontext/authCustomHook.ts';
+
 
 function App() {
+    const { logState } = useAuth()
+    console.log(logState)
     return (
         <Routes>
             <Route path='/login' element={<LoginPage />} />
@@ -19,7 +24,7 @@ function App() {
             >
                 <Route
                     index
-                    element={<RequireAuth>{'<AdvertsPage />'}</RequireAuth>}
+                    element={<RequireAuth><AdvertsPage /></RequireAuth>}
                 />
                 <Route
                     path=':adId'
