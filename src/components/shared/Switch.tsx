@@ -21,7 +21,7 @@ const RawSwitch = ({ checked, onChange, Leftname='',Rightname='',Name='switch' }
                 <input
                     type='checkbox'
                     name={Name}
-                    id='buysell'
+                    id='buysellcheck'
                     checked={isChecked}
                     onChange={handleInputChange}
                 />

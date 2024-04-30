@@ -4,6 +4,7 @@ import RequireAuth from './components/auth/requireAuth.tsx';
 import LoginPage from './pages/login/LoginPage.tsx';
 import AdvertsPage from './pages/AdvertsPage/advertsPage.tsx';
 import { useAuth } from './context/authcontext/authCustomHook.ts';
+import NewAdvertPage from './pages/NewAdvertPage/NewAdvertPage.tsx';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
                 />
                 <Route
                     path='new'
-                    element={<RequireAuth>{' <NewAdvertPage />'}</RequireAuth>}
+                    element={<RequireAuth><NewAdvertPage /></RequireAuth>}
                 />
             </Route>
             <Route path='/' element={<Navigate to='/adverts' />} />

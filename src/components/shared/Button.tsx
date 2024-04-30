@@ -10,7 +10,7 @@ const Button = styled.button<IButton>`
     cursor: pointer;
     background-color: var(--accent-100);
     border: 3px solid #ebebeb;
-    padding: 10px 22px;
+    padding: 10px 12px;
     border-radius: 10px;
     color: var(--accent-200);
     text-align: center;
