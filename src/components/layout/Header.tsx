@@ -4,38 +4,37 @@ import { useEffect, useState } from 'react';
 import getTags from './services';
 import Button from '../shared/Button';
 import Form from '../shared/Form';
-import { useAuth } from '../../context/authcontext/authCustomHook';
+import {  useAuth } from '../../context/authcontext/authCustomHook';
 import { logout } from '../../pages/login/services';
 import { useFilterContext } from '../../context/filterContext/filterCustomHook';
 import { IpropsFilter } from '../../interfaces/interfaces';
 import Select from '../shared/Select';
 import FormField from '../shared/FormField';
 import { useConfirm } from '../../context/confirmationContext/confirmCustomHook';
+import { client } from '../../utils/api/client';
 export default function Header() {
     const [tags, setTags] = useState<string[]>([]);
     const { logState, onLogout } = useAuth();
     const { filtersState, updateFilters } = useFilterContext();
     const {confirmState, onUnhidden, onSession, onCancel} =useConfirm()    
     const [gonnaLogout, setGonnaLogout] = useState<boolean>();
-    onCancel()
     const handleLogoutClick =  () => {
+        setGonnaLogout(true)
         onSession()
         onUnhidden()
-        setGonnaLogout(true)
-        console.log('gonnaLogout')
+    
     };
-
+    console.log('header',client.defaults.headers.common['Authorization'])
     useEffect(() => {
-        console.log('logStateheader',confirmState)
         const aceptedLogout =async() =>{
             await logout();
             onLogout();
         }
+        console.log('acepto',confirmState, 'quiero',gonnaLogout)
         if(confirmState&&gonnaLogout){
-            console.log('pasa por aqui')
             aceptedLogout()
-            onCancel()
         }
+        onCancel()
         setGonnaLogout(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [confirmState]);

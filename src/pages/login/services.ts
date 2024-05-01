@@ -3,6 +3,7 @@ import { ILogin } from "../../interfaces/interfaces";
 
 export const login = async (formvalues: ILogin) => {
     try {
+        console.log(formvalues)
         const response = await client.post('/api/auth/login', formvalues);
         const { accessToken } = response.data;
 

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Button from '../../components/shared/Button.tsx';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import { login } from './services.ts';
 import './loginPage.css';
 import Form from '../../components/shared/Form.tsx';
@@ -10,6 +12,9 @@ import { ILogin } from '../../interfaces/interfaces.ts';
 import RawSwitch from '../../components/shared/Switch.tsx';
 
 export default function LoginPage() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const { onLogin } = useAuth();
     const [formValues, setFormValues] = useState<ILogin>({
         email: '',
@@ -25,8 +30,14 @@ export default function LoginPage() {
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        await login(formValues);
-        onLogin();
+        try {
+            await login(formValues);
+            onLogin();
+            const to = location.state?.from || '/';
+            navigate(to, { replace: true });
+        } catch (error) {
+            console.log(error);
+        }
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormValues((currentFormValues) => ({
