@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import Button from '../../components/shared/Button.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { login } from './services.ts';
-import './loginPage.css';
 import Form from '../../components/shared/Form.tsx';
 import { useAuth } from '../../context/authcontext/authCustomHook.ts';
 import Layout from '../../components/layout/Layout.tsx';
 import FormField from '../../components/shared/FormField.tsx';
 import { ILogin } from '../../interfaces/interfaces.ts';
 import RawSwitch from '../../components/shared/Switch.tsx';
+import styled from 'styled-components';
 
 export default function LoginPage() {
     const location = useLocation();
@@ -49,7 +48,7 @@ export default function LoginPage() {
     const buttonDisabled = !email || !password;
     return (
         <Layout>
-            <div className='loginPage'>
+            <StyledLogin className='loginPage'>
                 <h1 className='loginPage-title'>Login</h1>
                 <Form id='login-form' variant='column' customwidth='100%'>
                     <FormField
@@ -84,7 +83,19 @@ export default function LoginPage() {
                         Login
                     </Button>
                 </Form>
-            </div>
+            </StyledLogin>
         </Layout>
     );
 }
+const StyledLogin = styled.div`display: flex;
+margin: auto;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 15px;
+height: 100%;
+width: fit-content;
+
+.loginPage-title {
+    color: var(--text-100);
+}`

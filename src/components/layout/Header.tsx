@@ -157,7 +157,7 @@ export default function Header() {
                                 </Button>
                             </li>
                             <li>
-                                <Button className='signup' as={Link} to='/adverts/new'>
+                                <Button className='signup' as={Link} to='/adverts/new' state={{ from: location.pathname }} replace >
                                     Nuevo Anuncio
                                 </Button>
                             </li>

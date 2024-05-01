@@ -9,8 +9,11 @@ import Select from '../../components/shared/Select.tsx';
 import getTags from '../../components/layout/services.ts';
 import { postAd } from './services.ts';
 import { client } from '../../utils/api/client.ts';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function NewAdvertPage() {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [optionTags, setTags] = useState<string[]>([]);
     const [formValues, setFormValues] = useState({
         name: '',
@@ -43,16 +46,13 @@ export default function NewAdvertPage() {
 
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('pre',formValues)
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
             [event.target.name]: event.target.checked,
         }));
-        console.log('psot',formValues)
 
     };
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-               console.log(formValues)
 
         const file = event.target.files && event.target.files[0];
         if (file) {
@@ -63,13 +63,18 @@ export default function NewAdvertPage() {
                 [event.target.name]: file,
             }
             ));
-        }       console.log(formValues)
-
+        }     
     };
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-       console.log(formValues)
-        event.preventDefault();
+        try {
+            event.preventDefault();
         await postAd(formValues);
+        const to = location.state?.from || '/';
+            navigate(to, { replace: true });
+        } catch (error) {
+            console.log(error)
+        }
+        
     };
     useEffect(() => {
         const getDataTags = async () => {
