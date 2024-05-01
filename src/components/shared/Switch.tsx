@@ -8,15 +8,15 @@ interface ISwitch{
     Name?: string;
 }
 const RawSwitch = ({ checked, onChange, Leftname='',Rightname='',Name='switch' }:ISwitch) => {
-    const [isChecked, setIsChecked] = useState(!checked);
+    const [isChecked, setIsChecked] = useState(checked);
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsChecked(event.target.checked);
         onChange(event);
     };
-
+    console.log('ischecked',checked)
     return (
         <div className='switch-container'>
-            <h3>{Leftname}</h3>
+            <h3 className='switchtext'>{Leftname}</h3>
             <label className='switch'>
                 <input
                     type='checkbox'
@@ -27,7 +27,7 @@ const RawSwitch = ({ checked, onChange, Leftname='',Rightname='',Name='switch' }
                 />
                 <span className='slider round'></span>
             </label>
-            <h3>{Rightname}</h3>
+            <h3 className='switchtext'>{Rightname}</h3>
         </div>
     );
 };

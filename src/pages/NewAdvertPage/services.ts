@@ -8,7 +8,6 @@ export interface IAdsPost {
 }
 
 export const postAd = async (formvalues: IAdsPost) => {
-  console.log(formvalues)
     try {
         await client.post('/api/v1/adverts', formvalues);
     } catch (error) {

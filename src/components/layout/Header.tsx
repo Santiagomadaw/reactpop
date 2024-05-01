@@ -10,16 +10,37 @@ import { useFilterContext } from '../../context/filterContext/filterCustomHook';
 import { IpropsFilter } from '../../interfaces/interfaces';
 import Select from '../shared/Select';
 import FormField from '../shared/FormField';
-
+import { useConfirm } from '../../context/confirmationContext/confirmCustomHook';
 export default function Header() {
     const [tags, setTags] = useState<string[]>([]);
     const { logState, onLogout } = useAuth();
     const { filtersState, updateFilters } = useFilterContext();
-    //Handlers
-    const handleLogoutClick = async () => {
-        await logout();
-        onLogout();
+    const {confirmState, onUnhidden, onSession, onCancel} =useConfirm()    
+    const [gonnaLogout, setGonnaLogout] = useState<boolean>();
+    onCancel()
+    const handleLogoutClick =  () => {
+        onSession()
+        onUnhidden()
+        setGonnaLogout(true)
+        console.log('gonnaLogout')
     };
+
+    useEffect(() => {
+        console.log('logStateheader',confirmState)
+        const aceptedLogout =async() =>{
+            await logout();
+            onLogout();
+        }
+        if(confirmState&&gonnaLogout){
+            console.log('pasa por aqui')
+            aceptedLogout()
+            onCancel()
+        }
+        setGonnaLogout(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [confirmState]);
+
+
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -68,13 +89,15 @@ export default function Header() {
 
     return (
         <header className='header'>
-            <Link to='/'>
+            <Link to='/adverts'>
                 <h1>
                     <span>w</span>allopop
                 </h1>
             </Link>
             {logState ? (
                 <>
+                    
+
                     <Form id='search'>
                         <FormField
                             customheight="38px"

@@ -29,12 +29,10 @@ export default function LoginPage() {
         onLogin();
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.checked);
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
             [event.target.name]: event.target.checked,
         }));
-        console.log(formValues);
     };
     const { email, password } = formValues;
     const buttonDisabled = !email || !password;
@@ -42,9 +40,10 @@ export default function LoginPage() {
         <Layout>
             <div className='loginPage'>
                 <h1 className='loginPage-title'>Login</h1>
-                <Form id='login-form' variant='column'>
+                <Form id='login-form' variant='column' customwidth='100%'>
                     <FormField
                         customheight='38px'
+                        customwidth='100%'
                         type='text'
                         name='email'
                         id='email'
@@ -52,6 +51,7 @@ export default function LoginPage() {
                     />
                     <FormField
                         customheight='38px'
+                        customwidth='100%'
                         type='password'
                         name='password'
                         id='password'
@@ -61,13 +61,14 @@ export default function LoginPage() {
                         Name='save'
                         checked={true}
                         onChange={handleSwitchChange}
-                        Rightname='Guardar contraseña'
+                        Rightname='Guardar'
                     />
                     <Button
                         type='submit'
                         disabled={buttonDisabled}
                         className='loginButton'
                         onClick={handleSubmit}
+                        customwidth='100%'
                     >
                         Login
                     </Button>

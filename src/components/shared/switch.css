@@ -14,7 +14,9 @@
     width: 60px;
     height: 34px;
 }
-
+.switchtext, .loginPage-title{
+    color: var(--text-100);
+}
 .switch input {
     opacity: 0;
     width: 0;

@@ -17,7 +17,6 @@ export default function NewAdvertPage() {
         price: 0,
         tags: '',
         sale: false,
-        photo: '',
     });
 
     client.defaults.headers.post['Content-Type'] = 'multipart/form-data';
@@ -29,7 +28,7 @@ export default function NewAdvertPage() {
             ...currentFormValues,
             [event.target.name]: event.target.value,
         }));
-        console.log(formValues);
+
     };
     const handleChangeMultiSelect = (
         event: React.ChangeEvent<HTMLSelectElement>
@@ -41,16 +40,20 @@ export default function NewAdvertPage() {
             ...currentFormValues,
             [event.target.name]: options.join(', '),
         }));
+
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.checked);
+        console.log('pre',formValues)
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
             [event.target.name]: event.target.checked,
         }));
-        console.log(formValues);
+        console.log('psot',formValues)
+
     };
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+               console.log(formValues)
+
         const file = event.target.files && event.target.files[0];
         if (file) {
             const formData = new FormData();
@@ -58,10 +61,13 @@ export default function NewAdvertPage() {
             setFormValues((currentFormValues) => ({
                 ...currentFormValues,
                 [event.target.name]: file,
-            }));
-        }
+            }
+            ));
+        }       console.log(formValues)
+
     };
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+       console.log(formValues)
         event.preventDefault();
         await postAd(formValues);
     };
@@ -124,8 +130,8 @@ export default function NewAdvertPage() {
                     />
                     <RawSwitch
                         Name='sale'
-                        Leftname='Venta'
-                        Rightname='Compra'
+                        Leftname='Compra'
+                        Rightname='Venta'
                         checked={sale}
                         onChange={handleSwitchChange}
                     />

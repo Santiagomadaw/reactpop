@@ -6,6 +6,5 @@ export const getAd = (id:string) => {
 };
 
 export const deleteAd = (id:string) => {
-    console.log(id)
     return client.delete(`/api/v1/adverts/${id}`);
 };
