@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import axios from 'axios'
 
 export const client = axios.create({
@@ -11,5 +10,18 @@ export const setAuthorizationHeader = (token: string) =>
 export const removeAuthorizationHeader = () => {
     delete client.defaults.headers.common['Authorization'];
 };
-client.interceptors.response.use((response: AxiosResponse): AxiosResponse => response)
-
+client.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response) {
+            //Server error
+            return Promise.reject({
+                message: error.response.statusText,
+                ...error.response,
+                ...error.response.data,
+            });
+        }
+        // Request error
+        return Promise.reject({ message: error.message });
+    },
+);

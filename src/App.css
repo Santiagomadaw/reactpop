@@ -1,14 +1,14 @@
 :root{    
-  --primary-100:#FF6600;
-  --primary-200:#ff983f;
-  --primary-300:#ffffa1;
-  --accent-100:#F5F5F5;
-  --accent-200:#242424;
+  --primary-100:#61DAFB;
+  --primary-200:#39bcdc;
+  --primary-300:#007997;
+  --accent-100:#ff8640;
+  --accent-200:#f8f8f8;
   --text-100:#FFFFFF;
   --text-200:#e0e0e0;
-  --bg-100:#1D1F21;
-  --bg-200:#2c2e30;
-  --bg-300:#444648;
+  --bg-100:#282C34;
+  --bg-200:#383c44;
+  --bg-300:#50555e;
     }
 #root {
   height: 100vh;
@@ -21,5 +21,10 @@ main{
   
   height: 80vh;
   padding: 15px 0;
+  overflow: scroll;
+  
+}
 
+main::-webkit-scrollbar {
+  display: none;
 }

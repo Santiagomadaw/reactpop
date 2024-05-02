@@ -5,17 +5,23 @@ import { IAds, IpropsFilter } from '../../interfaces/interfaces.ts';
 import Layout from '../../components/layout/Layout.tsx';
 import { useFilterContext } from '../../context/filterContext/filterCustomHook.ts';
 import styled from 'styled-components';
+import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
 
 export default function AdvertsPage() {
     const { filtersState } = useFilterContext();
     const [ads, setAds] = useState<IAds[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const resetError = () => setError(null);
     useEffect(() => {
         const getDatad = async () => {
             try {
                 const ads = await getAds();
                 setAds(ads.data);
             } catch (error) {
-                console.error('Error fetching ads:', error);
+                if (error) {
+                    const msg: string = (error as Error).message;
+                    setError(msg);
+                }
             }
         };
         getDatad();
@@ -60,6 +66,12 @@ export default function AdvertsPage() {
                     sellAds.map((ad, index) => (
                         <SingleAd key={index} {...ad} />
                     ))}
+                {error && <ErrorMessage
+                        className='loginPage-error'
+                        onClick={resetError}
+                    >
+                        <h3>{error.toUpperCase()}</h3>
+                    </ErrorMessage>}
             </StyledAdList>
         </Layout>
     );

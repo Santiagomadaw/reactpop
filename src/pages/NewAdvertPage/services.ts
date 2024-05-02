@@ -11,7 +11,8 @@ export const postAd = async (formvalues: IAdsPost) => {
     try {
         await client.post('/api/v1/adverts', formvalues);
     } catch (error) {
-        console.log(error)
+      const msg:string = (error as Error).message
+      return Promise.reject({ message: msg });
     }
 }
 

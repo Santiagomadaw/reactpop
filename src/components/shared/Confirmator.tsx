@@ -3,11 +3,10 @@ import { useConfirm } from "../../context/confirmationContext/confirmCustomHook"
 import Button from "./Button"
 const Confirmator=()=>{
 
-    const {confirmState,onAccept,onCancel, hiddenState,onHidden, textState} =useConfirm()
+    const {onAccept,onCancel, hiddenState,onHidden, textState} =useConfirm()
     const handleAccept = () =>{
         onAccept()
         onHidden()
-        console.log(confirmState)
     }
     const handleCancel = () =>{
         onCancel()

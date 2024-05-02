@@ -129,13 +129,12 @@ const Switch = styled.div`
         border-radius: 50%;
     }
 `;
-const RawSwitch = ({ checked, onChange, Leftname='',Rightname='',Name='switch' }:ISwitch) => {
+const RawSwitch = ({  onChange, Leftname='',Rightname='',Name='switch' }:ISwitch) => {
     const [isChecked, setIsChecked] = useState(false);
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsChecked(event.target.checked);
         onChange(event);
     };
-    console.log('ischecked',checked)
     return (
         <Switch className='switch-container'>
             <h3 className='switchtext'>{Leftname}</h3>

@@ -9,11 +9,12 @@ import FormField from '../../components/shared/FormField.tsx';
 import { ILogin } from '../../interfaces/interfaces.ts';
 import RawSwitch from '../../components/shared/Switch.tsx';
 import styled from 'styled-components';
-
+import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
 export default function LoginPage() {
     const location = useLocation();
     const navigate = useNavigate();
-
+    const [error, setError] = useState<string | null>(null);
+    const resetError = () => setError(null);
     const { onLogin } = useAuth();
     const [formValues, setFormValues] = useState<ILogin>({
         email: '',
@@ -35,7 +36,10 @@ export default function LoginPage() {
             const to = location.state?.from || '/';
             navigate(to, { replace: true });
         } catch (error) {
-            console.log(error);
+            if (error) {
+                const msg: string = (error as Error).message;
+                setError(`Error fetching login: ${msg}`);
+            }
         }
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,20 +86,28 @@ export default function LoginPage() {
                     >
                         Login
                     </Button>
+                    {error && <ErrorMessage
+                        className='loginPage-error'
+                        onClick={resetError}
+                    >
+                        <h3>{error.toUpperCase()}</h3>
+                    </ErrorMessage>}
                 </Form>
             </StyledLogin>
         </Layout>
     );
 }
-const StyledLogin = styled.div`display: flex;
-margin: auto;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-gap: 15px;
-height: 100%;
-width: fit-content;
+const StyledLogin = styled.div`
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    height: 100%;
+    width: fit-content;
 
-.loginPage-title {
-    color: var(--text-100);
-}`
+    .loginPage-title {
+        color: var(--text-100);
+    }
+`;

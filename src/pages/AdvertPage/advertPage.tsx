@@ -1,34 +1,34 @@
 import { useEffect, useState } from 'react';
 import { IAds } from '../../interfaces/interfaces.ts';
 import Layout from '../../components/layout/Layout.tsx';
-import {getAd, deleteAd} from './service.ts';
+import { getAd, deleteAd } from './service.ts';
 import { Link, useParams } from 'react-router-dom';
 import { useConfirm } from '../../context/confirmationContext/confirmCustomHook.ts';
 import './advertPage.css';
 import Button from '../../components/shared/Button.tsx';
+import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
+
+
 export default function AdvertPage() {
     const [ad, setAd] = useState<IAds>();
-    const {confirmState, onUnhidden, onDeleter} =useConfirm()
+    const { confirmState, onUnhidden, onDeleter } = useConfirm();
     const [gonnaDelete, setGonnaDelete] = useState<boolean>();
     const params = useParams();
-    console.log(params)
-console.log(confirmState)
-    const handleDeleteAd = ()=>{
-        onDeleter()
-        onUnhidden()
-        setGonnaDelete(true)
-        console.log(gonnaDelete, confirmState)
-
-    }
+    const handleDeleteAd = () => {
+        onDeleter();
+        onUnhidden();
+        setGonnaDelete(true);
+    };
+    const [error, setError] = useState<string | null>(null);
+    const resetError = () => setError(null);
     useEffect(() => {
-        console.log('message')
-        console.log(gonnaDelete, confirmState)
-        if( gonnaDelete && confirmState){
-           params.adId && deleteAd(params.adId)
+        if (gonnaDelete && confirmState) {
+            params.adId && deleteAd(params.adId);
         }
-        setGonnaDelete(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        setGonnaDelete(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [confirmState]);
+    
 
     useEffect(() => {
         const getDatad = async () => {
@@ -37,7 +37,10 @@ console.log(confirmState)
                     const ad = await getAd(params.adId);
                     setAd(ad.data);
                 } catch (error) {
-                    console.error('Error fetching ad:', error);
+                    if (error) {
+                        const msg: string = (error as Error).message;
+                        setError(`Error fetching ad: ${msg}`);
+                    }
                 }
             }
         };
@@ -73,7 +76,7 @@ console.log(confirmState)
                         </Button>
                     </div>
                     <div>
-                        <Button  id='removeAdButton' onClick={handleDeleteAd}>
+                        <Button id='removeAdButton' onClick={handleDeleteAd}>
                             Borrar
                         </Button>
                         <Button disabled id='editButton'>
@@ -81,6 +84,14 @@ console.log(confirmState)
                         </Button>
                         <Button id='backButton'>Volver</Button>
                     </div>
+                    {error && (
+                            <ErrorMessage
+                                className='loginPage-error'
+                                onClick={resetError}
+                            >
+                                <h3>{error.toUpperCase()}</h3>
+                            </ErrorMessage>
+                        )}
                 </div>
             </Layout>
         )

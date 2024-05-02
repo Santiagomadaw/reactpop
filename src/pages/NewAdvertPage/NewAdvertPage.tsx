@@ -10,6 +10,7 @@ import getTags from '../../components/layout/services.ts';
 import { postAd } from './services.ts';
 import { client } from '../../utils/api/client.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
 
 export default function NewAdvertPage() {
     const location = useLocation();
@@ -21,6 +22,8 @@ export default function NewAdvertPage() {
         tags: '',
         sale: false,
     });
+    const [error, setError] = useState<string | null>(null);
+    const resetError = () => setError(null);
 
     client.defaults.headers.post['Content-Type'] = 'multipart/form-data';
     const { name, price, tags, sale } = formValues;
@@ -31,7 +34,6 @@ export default function NewAdvertPage() {
             ...currentFormValues,
             [event.target.name]: event.target.value,
         }));
-
     };
     const handleChangeMultiSelect = (
         event: React.ChangeEvent<HTMLSelectElement>
@@ -43,38 +45,57 @@ export default function NewAdvertPage() {
             ...currentFormValues,
             [event.target.name]: options.join(', '),
         }));
-
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
             [event.target.name]: event.target.checked,
         }));
-
     };
+    function hasValidExtension(fileName: string) {
+        const validExtensions = [
+            'jpg',
+            'jpeg',
+            'png',
+            'gif',
+            'bmp',
+            'svg',
+        ];
+        const extension = fileName
+            .slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2)
+            .toLowerCase();
+            console.log(extension)
+        return validExtensions.includes(extension);
+    }
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-
         const file = event.target.files && event.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('photo', file);
-            setFormValues((currentFormValues) => ({
-                ...currentFormValues,
-                [event.target.name]: file,
+        if (file && hasValidExtension(file.name)) {
+            
+                const formData = new FormData();
+                formData.append('photo', file);
+                setFormValues((currentFormValues) => ({
+                    ...currentFormValues,
+                    [event.target.name]: file,
+                }));
+            } else {
+                setError('Formato de imagen no valido');
             }
-            ));
-        }     
+        
     };
+
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         try {
             event.preventDefault();
-        await postAd(formValues);
-        const to = location.state?.from || '/';
+            await postAd(formValues);
+            const to = location.state?.from || '/';
             navigate(to, { replace: true });
         } catch (error) {
-            console.log(error)
+            
+            if (error) {
+                const msg: string = (error as Error).message;
+                setError(`Error fetching new ad: ${msg}`);
+            }
         }
-        
     };
     useEffect(() => {
         const getDataTags = async () => {
@@ -82,7 +103,10 @@ export default function NewAdvertPage() {
                 const tags = await getTags();
                 setTags(tags.data);
             } catch (error) {
-                console.error('Error fetching ads:', error);
+                if (error) {
+                    const msg: string = (error as Error).message;
+                    setError(`Error fetching tags: ${msg}`);
+                }
             }
         };
         getDataTags();
@@ -140,7 +164,6 @@ export default function NewAdvertPage() {
                         checked={sale}
                         onChange={handleSwitchChange}
                     />
-
                     <div className='buttonWrapper'>
                         <Button
                             type='button'
@@ -158,7 +181,16 @@ export default function NewAdvertPage() {
                         >
                             Crear anuncio
                         </Button>
+                        
                     </div>
+                    {error && (
+                            <ErrorMessage
+                                className='loginPage-error'
+                                onClick={resetError}
+                            >
+                                <h3>{error.toUpperCase()}</h3>
+                            </ErrorMessage>
+                        )}
                 </Form>
             </section>
         </Layout>

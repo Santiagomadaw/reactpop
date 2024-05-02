@@ -3,16 +3,19 @@ import { ILogin } from "../../interfaces/interfaces";
 
 export const login = async (formvalues: ILogin) => {
     try {
-        console.log(formvalues)
         const response = await client.post('/api/auth/login', formvalues);
-        const { accessToken } = response.data;
+        const {accessToken} = response.data ;
 
         setAuthorizationHeader(accessToken)
         if(formvalues.save){
             localStorage.setItem('auth', accessToken)
         }
     } catch (error) {
-        console.log(error)
+        
+            const msg:string = (error as Error).message
+            return Promise.reject({ message: msg });
+        
+        
     }
 }
 

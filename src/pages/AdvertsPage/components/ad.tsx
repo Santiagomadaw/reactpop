@@ -22,6 +22,7 @@ export default function SingleAd({ id, photo, name, price, sale, tags }: IAds) {
     );
 }
 const StyledSingleAd = styled.div`
+    box-shadow: 0px 0px 9px 4px rgba(0, 0, 0, 0.75);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -31,7 +32,7 @@ const StyledSingleAd = styled.div`
     transition: 0.09s;
     border-radius: 10px;
     padding: 10px;
-    background: var(--accent-100);
+    background: var(--accent-200);
     .item {
         margin: 0;
         color: grey;

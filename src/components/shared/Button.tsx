@@ -8,7 +8,7 @@ interface IButton {
 const Button = styled.button<IButton>`
 
     cursor: pointer;
-    background-color: var(--accent-100);
+    background-color: var(--primary-300);
     border: 3px solid var(--primary-100);
     padding: 10px 12px;
     border-radius: 10px;

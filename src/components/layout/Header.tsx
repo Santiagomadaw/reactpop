@@ -11,26 +11,27 @@ import { IpropsFilter } from '../../interfaces/interfaces';
 import Select from '../shared/Select';
 import FormField from '../shared/FormField';
 import { useConfirm } from '../../context/confirmationContext/confirmCustomHook';
-import { client } from '../../utils/api/client';
+import ErrorMessage from '../shared/ErrorMessage';
 export default function Header() {
     const [tags, setTags] = useState<string[]>([]);
     const { logState, onLogout } = useAuth();
     const { filtersState, updateFilters } = useFilterContext();
     const {confirmState, onUnhidden, onSession, onCancel} =useConfirm()    
     const [gonnaLogout, setGonnaLogout] = useState<boolean>();
+    const [error, setError] = useState<string | null>(null);
+    const resetError = () => setError(null);
+
     const handleLogoutClick =  () => {
         setGonnaLogout(true)
         onSession()
         onUnhidden()
     
     };
-    console.log('header',client.defaults.headers.common['Authorization'])
     useEffect(() => {
         const aceptedLogout =async() =>{
             await logout();
             onLogout();
         }
-        console.log('acepto',confirmState, 'quiero',gonnaLogout)
         if(confirmState&&gonnaLogout){
             aceptedLogout()
         }
@@ -80,12 +81,14 @@ export default function Header() {
                 const tags = await getTags();
                 setTags(tags.data);
             } catch (error) {
-                console.error('Error fetching ads:', error);
+                if (error) {
+                    const msg: string = (error as Error).message;
+                    setError(`Error fetching tags: ${msg}`);
+                }
             }
         };
         getDataTags();
     }, []);
-
     return (
         <header className='header'>
             <Link to='/adverts'>
@@ -95,8 +98,6 @@ export default function Header() {
             </Link>
             {logState ? (
                 <>
-                    
-
                     <Form id='search'>
                         <FormField
                             customheight="38px"
@@ -124,6 +125,12 @@ export default function Header() {
                                 </option>
                             ))}
                         </Select>
+                        {error && <ErrorMessage
+                        className='loginPage-error'
+                        onClick={resetError}
+                    >
+                        <h3>{error.toUpperCase()}</h3>
+                    </ErrorMessage>}
                         <Select
                             customheight="38px"
                             name='buysell'
@@ -141,6 +148,7 @@ export default function Header() {
                                 Venta
                             </option>
                         </Select>
+                        
                         <Button id='searchbutton' onClick={handleClear}>
                             Reset
                         </Button>
