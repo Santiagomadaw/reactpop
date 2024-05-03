@@ -22,6 +22,7 @@ const Button = styled.button<IButton>`
     }
     &:disabled {
         cursor: not-allowed;
+        opacity: .5;
         transform: scale(1);
         background-color: var(--accent-200);
         color: var(--text-200);

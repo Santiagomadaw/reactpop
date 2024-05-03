@@ -6,6 +6,8 @@ import getAds from './service.ts';
 import Layout from '../../components/layout/Layout.tsx';
 import { useFilterContext } from '../../context/filterContext/filterCustomHook.ts';
 import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
+import Button from '../../components/shared/Button.tsx';
+import Noad from './components/Noad.tsx';
 
 export default function AdvertsPage() {
     const { filtersState } = useFilterContext();
@@ -59,15 +61,16 @@ export default function AdvertsPage() {
     let sellAds = ads;
     if (filtersState) {
         sellAds = FilterOption(filtersState);
-        
+        Button
     }
+    console.log(sellAds.length)
     return (
         <Layout>
             <StyledAdList className='ad-list'>
-                {sellAds &&
+                {sellAds.length>0 ?
                     sellAds.map((ad, index) => (
                         <SingleAd key={index} {...ad} />
-                    ))}
+                    )) : (<Noad/>)}
                 {error && <ErrorMessage
                         className='loginPage-error'
                         onClick={resetError}

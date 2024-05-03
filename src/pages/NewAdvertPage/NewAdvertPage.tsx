@@ -82,7 +82,10 @@ export default function NewAdvertPage() {
             }
         
     };
-
+    const handleBack = () =>{
+        const to = location.state?.from || '/';
+            navigate(to, { replace: true });
+    }
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         try {
             event.preventDefault();
@@ -169,6 +172,7 @@ export default function NewAdvertPage() {
                             type='button'
                             className='backButton'
                             customwidth='50%'
+                            onClick={handleBack}
                         >
                             Volver
                         </Button>

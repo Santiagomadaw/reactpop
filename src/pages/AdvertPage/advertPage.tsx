@@ -7,7 +7,7 @@ import { getAd, deleteAd } from './service.ts';
 import { useConfirm } from '../../context/confirmationContext/confirmCustomHook.ts';
 import Button from '../../components/shared/Button.tsx';
 import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
-import './advertPage.css';
+import styled from 'styled-components';
 
 export default function AdvertPage() {
     const [ad, setAd] = useState<IAds>();
@@ -73,7 +73,7 @@ export default function AdvertPage() {
 
     return (
         <Layout>
-            <div className='advert'>
+            <StyledAdvertPage className='advert'>
                 {ad && (
                     <>
                         <div className='img-container'>
@@ -116,7 +116,74 @@ export default function AdvertPage() {
                         <h3>{error.toUpperCase()}</h3>
                     </ErrorMessage>
                 )}
-            </div>
+            </StyledAdvertPage>
         </Layout>
     );
 }
+
+const StyledAdvertPage = styled.div`
+
+box-shadow: 0px 0px 9px 4px rgba(0,0,0,0.75);
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 680px;
+max-width: 90%;
+background-color: var(--accent-200);
+padding: 20px 10px;
+border-radius: 10px;
+gap:10px;
+margin: 0 auto;
+h2, h1{
+    margin-left: 14px;
+    color: var(--text-200);
+}
+
+
+}
+.priceNameBlock{
+display: flex;
+flex-direction: column;
+align-items: start;
+width: 100%;
+
+}
+.img-container{
+margin-bottom: 20px;
+display: flex;
+width: 640px;
+max-width: 96%;
+height: 480px;
+border-radius: 10px;
+align-items: center;
+background:var(--accent-100);
+overflow: hidden;
+& img {
+    width: auto;
+    height: auto;
+    max-width: none; 
+    max-height: none;
+    min-width: 100%; 
+    min-height: 100%;
+    object-fit: cover;
+    
+}
+
+}
+
+
+.tags-container{
+display: flex;
+overflow: hidden;
+height: fit-content;
+gap: 4px;
+& .tagLink{
+    text-align: center;
+    padding: 3px 5px;
+    border-radius: 3px;
+    color: var(--text-200);
+    height: fit-content;
+    background: var(--bg-200);
+}
+
+    `

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import './header.css';
 import { useEffect, useState } from 'react';
 import getTags from './services';
 import Button from '../shared/Button';
@@ -12,6 +11,7 @@ import Select from '../shared/Select';
 import FormField from '../shared/FormField';
 import { useConfirm } from '../../context/confirmationContext/confirmCustomHook';
 import ErrorMessage from '../shared/ErrorMessage';
+import styled from 'styled-components';
 export default function Header() {
     const [tags, setTags] = useState<string[]>([]);
     const { logState, onLogout } = useAuth();
@@ -90,7 +90,7 @@ export default function Header() {
         getDataTags();
     }, []);
     return (
-        <header className='header'>
+        <StyledHeader className='header'>
             <Link to='/adverts'>
                 <h1>
                     <span>w</span>allopop
@@ -176,6 +176,48 @@ export default function Header() {
             ) : (
                 <></>
             )}
-        </header>
+        </StyledHeader>
     );
 }
+
+
+const StyledHeader = styled.header`
+display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
+    z-index: 2;
+    gap:10px;
+    border-bottom: 1px solid grey;
+    position: sticky;
+    top: 0;
+    padding: 2px 10px;
+    color: var( --text-100);
+
+    
+
+    h1 {
+        font-family: 'Grandstander', cursive;
+        font-weight: 900;
+        span {
+            font-size: 40px;
+        }
+    }
+    ul {
+        display: flex;
+        gap: 3px;
+        li {
+            list-style-type: none;
+            min-width: fit-content;
+        }
+    }
+    @media (max-width: 1280px) {
+        
+            height: 12vh;
+            flex-direction: column;
+            gap: 4px;
+            #search {
+                width: 100%;
+            
+        }
+    }`

@@ -6,7 +6,9 @@ export default function SingleAd({ id, photo, name, price, sale, tags }: IAds) {
     return (
         <Link className='add' to={`/adverts/${id}`}>
             <StyledSingleAd className='single-ad'>
-                <img src={photo} alt='' />
+                <div className='img-container'>
+                    <img src={photo} alt='' />
+                </div>
                 <strong className=''>{price} €</strong>
                 <p className='item'>{name}</p>
                 <p className='task sell'>{sale ? 'Venta' : 'Compra'}</p>
@@ -41,11 +43,22 @@ const StyledSingleAd = styled.div`
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    & img {
-        border-radius: 10px 10px 0 0;
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
+    .img-container{
+        display: flex;
+        max-width: 100%;
+        height:  200px;
+        max-height:  200px;
+
+        border-radius: 5px 5px 0 0;
+        align-items: center;
+        background:var(--accent-100);
+        overflow: hidden;
+        & img {
+            border-radius: 5px 5px 0 0;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
     }
     & strong {
         font-size: large;
@@ -59,6 +72,12 @@ const StyledSingleAd = styled.div`
         height: fit-content;
         background: var(--bg-200);
     }
+    .tags-container{
+        display: flex;
+        overflow: hidden;
+        height: fit-content;
+        gap: 4px;
+        }
     .sell{
         color: var(--text-100);
         background: var(--accent-100);
