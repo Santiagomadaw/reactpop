@@ -14,13 +14,13 @@ const Confirmator=()=>{
     }
 
     return (
-    <StyledConfirm>
+    <StyledConfirm hidden={hiddenState}>
         <div className="blurer" hidden={hiddenState}></div>   
         <div hidden={hiddenState} className="confirmator">
             <h2>Seguro que desea {textState}</h2>
             <div className="buttonWrapper">
-                <Button onClick={handleAccept}>Si</Button>
-                <Button onClick={handleCancel}>No</Button>
+                <Button onClick={handleAccept} customheight="25px">Si</Button>
+                <Button onClick={handleCancel} customheight="25px">No</Button>
             </div>  
             </div>    
     </StyledConfirm>)}
@@ -34,7 +34,6 @@ const StyledConfirm=styled.div`
     left: 0;
     width: 100%;
     height:100%;
-    background: rgb(48, 48, 48);
     opacity: .8;
     backdrop-filter: blur(15px);
     z-index: 3;
@@ -43,18 +42,24 @@ const StyledConfirm=styled.div`
     };
 }
 .confirmator{
+    display: flex;
+    flex-direction:column;
+    gap: 22px;
     left:50%;
     top:50%;
     transform: translate(-50%, -50%);
     z-index: 4;
-
     padding: 20px;
-    border: 2px solid red;
-    border-radius: 20px;
-    background: var(--primary-200);
+    border: 2px solid var(--accent-100);
+    border-radius: 10px;
+    background: var(--bg-200);
     position: absolute;
-    display: block;
     &[hidden]{
         display: none;
     }
+    h2{
+        color: var(--text-200);
+
+    }
+
 }`

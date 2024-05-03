@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import SingleAd from './components/ad.tsx';
-import getAds from './service.ts';
 import { IAds, IpropsFilter } from '../../interfaces/interfaces.ts';
+import getAds from './service.ts';
 import Layout from '../../components/layout/Layout.tsx';
 import { useFilterContext } from '../../context/filterContext/filterCustomHook.ts';
-import styled from 'styled-components';
 import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
 
 export default function AdvertsPage() {
@@ -47,10 +47,11 @@ export default function AdvertsPage() {
             );
         }
         // Filter by tags
-        if (filtersState.tags && filtersState.tags.length > 0) {
+        if (filtersState.tags) {
             filteredAds = filteredAds.filter((ad) =>
-                filtersState.tags.every((tag) => ad.tags.includes(tag))
-            );
+                filtersState.tags.every((tag) => { return ad.tags.includes(tag)})
+                );
+                
         }
         return filteredAds;
     };
@@ -58,6 +59,7 @@ export default function AdvertsPage() {
     let sellAds = ads;
     if (filtersState) {
         sellAds = FilterOption(filtersState);
+        
     }
     return (
         <Layout>
@@ -88,10 +90,6 @@ const StyledAdList = styled.div`
     &:has(.no-ad[noad]) {
         display: flex;
     }
-    @media (width < 1280px) {
-        .ad-list {
-            width: 90%;
-        }
     }
     .no-ad {
         color: silver;

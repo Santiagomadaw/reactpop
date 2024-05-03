@@ -5,11 +5,15 @@
     align-items: center;
     width: 680px;
     max-width: 90%;
-    background-color: var(--bg-300);
+    background-color: var(--accent-200);
     padding: 20px 10px;
     border-radius: 10px;
     gap:10px;
     margin: 0 auto;
+    h2, h1{
+        margin-left: 14px;
+        color: var(--text-200);
+    }
 }
 .priceNameBlock{
     display: flex;
@@ -46,18 +50,17 @@
     display: flex;
     overflow: hidden;
     height: fit-content;
-    
-    gap: 1px;
+    gap: 4px;
     & .tagLink{
         text-align: center;
         padding: 3px 5px;
         border-radius: 3px;
+        color: var(--text-200);
         height: fit-content;
-        color: var(--bg-100);
-        width:fit-content;
-        background: var(--accent-100);
+        background: var(--bg-200);
     }
 }
+
 
 
 

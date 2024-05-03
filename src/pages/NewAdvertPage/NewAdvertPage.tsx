@@ -43,7 +43,7 @@ export default function NewAdvertPage() {
         );
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
-            [event.target.name]: options.join(', '),
+            [event.target.name]: options.join(','),
         }));
     };
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,7 +115,7 @@ export default function NewAdvertPage() {
         <Layout>
             <section className='new-ad-contianer'>
                 <Form id='ad-form' variant='column' customwidth='350px'>
-                    <label htmlFor='name'>Articulo:</label>
+                    <label htmlFor='name'><h4>Articulo:</h4></label>
                     <FormField
                         type='text'
                         name='name'
@@ -124,7 +124,7 @@ export default function NewAdvertPage() {
                         onChange={handleChange}
                         required
                     />
-                    <label htmlFor='price'>price:</label>
+                    <label htmlFor='price'><h4>Price:</h4></label>
                     <FormField
                         type='number'
                         step='0.01'
@@ -134,7 +134,7 @@ export default function NewAdvertPage() {
                         onChange={handleChange}
                         required
                     />
-                    <label htmlFor='tags'>Etiquetas:</label>
+                    <label htmlFor='tags'><h4>Etiquetas:</h4></label>
                     <Select
                         name='tags'
                         id='tags'
@@ -150,7 +150,7 @@ export default function NewAdvertPage() {
                             </option>
                         ))}
                     </Select>
-                    <label htmlFor='photo'>Url foto:</label>
+                    <label htmlFor='photo'><h4>Foto:</h4></label>
                     <input
                         type='file'
                         name='photo'

@@ -6,10 +6,10 @@ interface IFormField {
 }
 
 const FormField = styled.input<IFormField>`
-    border: 1px solid var(--primary-100);
-    outline: 1px solid var(--primary-100);
+    border:none;
+    outline: none;
 
-    border-radius: 10px;
+    border-radius: 5px;
     padding-left: 10px;
     height: ${props => props.customheight || "30px"};
     width: ${props => props.customwidth || "fit-content"};

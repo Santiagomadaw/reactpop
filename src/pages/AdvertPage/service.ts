@@ -1,15 +1,18 @@
 import { client } from "../../utils/api/client";
 
-export const getAd = (id:string) => {
+export const getAd = (id: string) => {
+    let response = null
     try {
-        return client.get(`/api/v1/adverts/${id}`);
+        response = client.get(`/api/v1/adverts/${id}`);
+        return response
     } catch (error) {
-            const msg:string = (error as Error).message
-            return Promise.reject({ message: msg });
+        const msg: string = (error as Error).message
+        return Promise.reject({ message: msg });
     }
-    
+
+
 };
 
-export const deleteAd = (id:string) => {
+export const deleteAd = (id: string) => {
     return client.delete(`/api/v1/adverts/${id}`);
 };

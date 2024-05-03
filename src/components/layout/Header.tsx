@@ -100,7 +100,7 @@ export default function Header() {
                 <>
                     <Form id='search'>
                         <FormField
-                            customheight="38px"
+                            customheight="25px"
                             customwidth="100%"
                             type='text'
                             placeholder='Buscar'
@@ -109,7 +109,7 @@ export default function Header() {
                             onChange={handleChange}
                         />
                         <Select
-                            customheight="38px"
+                            customheight="25px"
                             name='tags'
                             id='tagsSelect'
                             value={filtersState.tags}
@@ -132,7 +132,7 @@ export default function Header() {
                         <h3>{error.toUpperCase()}</h3>
                     </ErrorMessage>}
                         <Select
-                            customheight="38px"
+                            customheight="25px"
                             name='buysell'
                             id='buysell'
                             value={filtersState.buysell}
@@ -149,7 +149,7 @@ export default function Header() {
                             </option>
                         </Select>
                         
-                        <Button id='searchbutton' onClick={handleClear}>
+                        <Button id='searchbutton' onClick={handleClear} customheight="25px">
                             Reset
                         </Button>
                     </Form>
@@ -160,12 +160,13 @@ export default function Header() {
                                     className='login'
                                     onClick={handleLogoutClick}
                                     id='logOutButton'
+                                    customheight="25px"
                                 >
                                     Logout
                                 </Button>
                             </li>
                             <li>
-                                <Button className='signup' as={Link} to='/adverts/new' state={{ from: location.pathname }} replace >
+                                <Button className='signup' as={Link} to='/adverts/new' state={{ from: location.pathname }}  customheight="25px" replace >
                                     Nuevo Anuncio
                                 </Button>
                             </li>

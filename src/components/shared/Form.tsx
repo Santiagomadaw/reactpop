@@ -14,6 +14,9 @@ const Form = styled.form<IForm>`
     height: ${(props) => props.customheight || 'fit-content'};
     width: ${(props) => props.customwidth || '80%'};
     gap: 10px;
+    h4{
+        color:var(--text-100);
+    }
     ${(props) =>
         props.variant === 'column'
             ? 

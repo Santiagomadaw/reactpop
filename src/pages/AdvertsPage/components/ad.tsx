@@ -9,10 +9,10 @@ export default function SingleAd({ id, photo, name, price, sale, tags }: IAds) {
                 <img src={photo} alt='' />
                 <strong className=''>{price} €</strong>
                 <p className='item'>{name}</p>
-                <p className='selltask'>{sale ? 'Venta' : 'Compra'}</p>
+                <p className='task sell'>{sale ? 'Venta' : 'Compra'}</p>
                 <div className='tags-container'>
                     {tags.map((tag, index) => (
-                        <div key={index} className='tagLink'>
+                        <div key={index} className='task'>
                             {tag}
                         </div>
                     ))}
@@ -35,7 +35,7 @@ const StyledSingleAd = styled.div`
     background: var(--accent-200);
     .item {
         margin: 0;
-        color: grey;
+        color: var(--accent-100);
         font-size: 16px;
         white-space: nowrap;
         overflow: hidden;
@@ -49,14 +49,19 @@ const StyledSingleAd = styled.div`
     }
     & strong {
         font-size: large;
+        color: var(--accent-100);
     }
-    .selltask {
+    .task {
         text-align: center;
         padding: 3px 5px;
         border-radius: 3px;
         color: var(--text-200);
         height: fit-content;
-        background: var(--bg-300);
+        background: var(--bg-200);
+    }
+    .sell{
+        color: var(--text-100);
+        background: var(--accent-100);
     }
     &:hover {
         transform: translate(0, -5px);

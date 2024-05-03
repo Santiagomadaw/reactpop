@@ -6,6 +6,7 @@ import AdvertsPage from './pages/AdvertsPage/advertsPage.tsx';
 import NewAdvertPage from './pages/NewAdvertPage/NewAdvertPage.tsx';
 import AdvertPage from './pages/AdvertPage/advertPage.tsx';
 import Confirmator from './components/shared/Confirmator.tsx';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
                 />
             </Route>
             <Route path='/' element={<Navigate to='/adverts' />} />
+            <Route path="/404" element={<NotFoundPage/>} />
+        <Route path="*" element={<Navigate to="/404" />} />
         </Routes>
         </>
     );
