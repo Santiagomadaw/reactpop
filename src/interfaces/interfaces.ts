@@ -8,6 +8,7 @@ export interface IAds {
     price: number;
     tags: string[];
     photo: string;
+    
 }
 export interface ILogin {
     email: string;
@@ -18,6 +19,8 @@ export interface IpropsFilter {
     search: string;
     tags: string[];
     buysell: 'all' | 'sell' | 'buy';
+    price: number[] | number;
+    
 }
 
 export interface IFilterContextProviderProps {

@@ -65,9 +65,6 @@ export default function AdvertPage() {
             }
         };
         getDatad();
-        return () => {
-            console.log('unmount');
-        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params]);
 

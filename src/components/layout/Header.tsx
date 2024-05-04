@@ -3,47 +3,66 @@ import { useEffect, useState } from 'react';
 import getTags from './services';
 import Button from '../shared/Button';
 import Form from '../shared/Form';
-import {  useAuth } from '../../context/authcontext/authCustomHook';
+import { useAuth } from '../../context/authcontext/authCustomHook';
 import { logout } from '../../pages/login/services';
 import { useFilterContext } from '../../context/filterContext/filterCustomHook';
 import { IpropsFilter } from '../../interfaces/interfaces';
 import Select from '../shared/Select';
 import FormField from '../shared/FormField';
 import { useConfirm } from '../../context/confirmationContext/confirmCustomHook';
-import ErrorMessage from '../shared/ErrorMessage';
 import styled from 'styled-components';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
 export default function Header() {
     const [tags, setTags] = useState<string[]>([]);
     const { logState, onLogout } = useAuth();
     const { filtersState, updateFilters } = useFilterContext();
-    const {confirmState, onUnhidden, onSession, onCancel} =useConfirm()    
+    const { confirmState, onUnhidden, onSession, onCancel } = useConfirm();
     const [gonnaLogout, setGonnaLogout] = useState<boolean>();
-    const [error, setError] = useState<string | null>(null);
-    const resetError = () => setError(null);
-
-    const handleLogoutClick =  () => {
-        setGonnaLogout(true)
-        onSession()
-        onUnhidden()
+    let minPrice:number=0
+    let maxPrice:number=0
+        if(Array.isArray(filtersState.price)){
+            minPrice = filtersState.price[0];
+            maxPrice = filtersState.price[1];
+        }
     
+    console.log(filtersState);
+    const handleLogoutClick = () => {
+        setGonnaLogout(true);
+        onSession();
+        onUnhidden();
     };
     useEffect(() => {
-        const aceptedLogout =async() =>{
+        const aceptedLogout = async () => {
             await logout();
             onLogout();
+        };
+        if (confirmState && gonnaLogout) {
+            aceptedLogout();
         }
-        if(confirmState&&gonnaLogout){
-            aceptedLogout()
-        }
-        onCancel()
-        setGonnaLogout(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        onCancel();
+        setGonnaLogout(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [confirmState]);
 
-
+    const handleChangeSlide = (event: number | number[]) => {
+        if (Array.isArray(event)) {
+            const currentFilterState = (
+                currentFilterState: IpropsFilter
+            ): IpropsFilter => {
+                return {
+                    ...currentFilterState,
+                    price: event,
+                };
+            };
+            updateFilters(currentFilterState(filtersState));
+        }
+    };
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
+        console.log(event);
         const currentFilterState = (
             currentFilterState: IpropsFilter
         ): IpropsFilter => {
@@ -72,7 +91,12 @@ export default function Header() {
     };
     const handleClear = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        updateFilters({ search: '', tags: [], buysell: 'all' });
+        updateFilters({
+            search: '',
+            tags: [],
+            buysell: 'all',
+            price: [0, 100000],
+        });
     };
     //Useffect
     useEffect(() => {
@@ -83,7 +107,7 @@ export default function Header() {
             } catch (error) {
                 if (error) {
                     const msg: string = (error as Error).message;
-                    setError(`Error fetching tags: ${msg}`);
+                    console.log(`Error fetching tags: ${msg}`);
                 }
             }
         };
@@ -99,17 +123,35 @@ export default function Header() {
             {logState ? (
                 <>
                     <Form id='search'>
-                        <FormField
-                            customheight="25px"
-                            customwidth="100%"
-                            type='text'
-                            placeholder='Buscar'
-                            name='search'
-                            id='searchItem'
-                            onChange={handleChange}
-                        />
+                        <div className='formslider'>
+                            <FormField
+                                customheight='25px'
+                                customwidth='100%'
+                                type='text'
+                                placeholder='Buscar'
+                                name='search'
+                                id='searchItem'
+                                onChange={handleChange}
+                            />
+                            <Slider
+                                value={filtersState.price}
+                                range
+                                min={minPrice}
+                                max={maxPrice}
+                                step={10}
+                                onChange={handleChangeSlide}
+                            />
+                            {Array.isArray(filtersState.price) && (
+                                <div className='slidertext'>
+                                    <h3>{filtersState.price[0]}€</h3>
+                                    <h3>{filtersState.price[1]}€</h3>
+                                </div>
+                            )}
+                        </div>
+
                         <Select
-                            customheight="25px"
+                            customheight='initial'
+                            customwidth='120px'
                             name='tags'
                             id='tagsSelect'
                             value={filtersState.tags}
@@ -125,33 +167,35 @@ export default function Header() {
                                 </option>
                             ))}
                         </Select>
-                        {error && <ErrorMessage
-                        className='loginPage-error'
-                        onClick={resetError}
-                    >
-                        <h3>{error.toUpperCase()}</h3>
-                    </ErrorMessage>}
-                        <Select
-                            customheight="25px"
-                            name='buysell'
-                            id='buysell'
-                            value={filtersState.buysell}
-                            onChange={handleChange}
-                        >
-                            <option value='all' disabled>
-                                --Option--
-                            </option>
-                            <option value='buy' id='buy'>
-                                Compra
-                            </option>
-                            <option value='sell' id='sell'>
-                                Venta
-                            </option>
-                        </Select>
-                        
-                        <Button id='searchbutton' onClick={handleClear} customheight="25px">
-                            Reset
-                        </Button>
+                        <div className='selectbutton'>
+                            <Select
+                                customheight='25px'
+                                customwidth='100px'
+                                name='buysell'
+                                id='buysell'
+                                value={filtersState.buysell}
+                                onChange={handleChange}
+                            >
+                                <option value='all' disabled>
+                                    --Option--
+                                </option>
+                                <option value='buy' id='buy'>
+                                    Compra
+                                </option>
+                                <option value='sell' id='sell'>
+                                    Venta
+                                </option>
+                            </Select>
+
+                            <Button
+                                id='searchbutton'
+                                onClick={handleClear}
+                                customheight='25px'
+                                customwidth='100px'
+                            >
+                                Reset
+                            </Button>
+                        </div>
                     </Form>
                     <nav className='navContainer'>
                         <ul>
@@ -160,13 +204,21 @@ export default function Header() {
                                     className='login'
                                     onClick={handleLogoutClick}
                                     id='logOutButton'
-                                    customheight="25px"
+                                    customheight='25px'
                                 >
                                     Logout
                                 </Button>
                             </li>
                             <li>
-                                <Button className='signup' as={Link} to='/adverts/new' state={{ from: location.pathname }}  customheight="25px" replace >
+                                <Button
+                                    className='signup'
+                                    as={Link}
+                                    to='/adverts/new'
+                                    state={{ from: location.pathname }}
+                                    customheight='25px'
+                                    customwidth='max-content'
+                                    replace
+                                >
                                     Nuevo Anuncio
                                 </Button>
                             </li>
@@ -180,22 +232,36 @@ export default function Header() {
     );
 }
 
-
 const StyledHeader = styled.header`
-display: flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     height: 10vh;
     z-index: 2;
-    gap:10px;
+    gap: 10px;
     border-bottom: 1px solid grey;
     position: sticky;
     top: 0;
     padding: 2px 10px;
-    color: var( --text-100);
-
-    
-
+    color: var(--text-100);
+    .formslider{
+        display:flex;
+        flex-direction: column;
+        justify-items:center;
+        width:100%;
+        .rc-slider{
+            width:98%;
+            margin:auto;
+            margin-top: 10px;
+        }
+        .slidertext{
+            display:flex;
+            justify-content: space-between;
+            h3{
+                color:var(--text-100);
+            }
+        }
+    }
     h1 {
         font-family: 'Grandstander', cursive;
         font-weight: 900;
@@ -205,19 +271,14 @@ display: flex;
     }
     ul {
         display: flex;
+        flex-direction: column;
+
         gap: 3px;
         li {
             list-style-type: none;
             min-width: fit-content;
         }
     }
-    @media (max-width: 1280px) {
-        
-            height: 12vh;
-            flex-direction: column;
-            gap: 4px;
-            #search {
-                width: 100%;
-            
-        }
-    }`
+   
+    }
+`;

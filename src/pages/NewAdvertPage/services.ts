@@ -8,8 +8,11 @@ export interface IAdsPost {
 }
 
 export const postAd = async (formvalues: IAdsPost) => {
+ 
+
     try {
-        await client.post('/api/v1/adverts', formvalues);
+        return await client.post('/api/v1/adverts', formvalues,{ headers:{'Content-Type': 'multipart/form-data'}});
+
     } catch (error) {
       const msg:string = (error as Error).message
       return Promise.reject({ message: msg });

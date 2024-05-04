@@ -2,8 +2,9 @@ import { client, setAuthorizationHeader, removeAuthorizationHeader } from "../..
 import { ILogin } from "../../interfaces/interfaces";
 
 export const login = async (formvalues: ILogin) => {
+    const {email, password} = formvalues
     try {
-        const response = await client.post('/api/auth/login', formvalues);
+        const response = await client.post('/api/auth/login', {email, password});
         const {accessToken} = response.data ;
 
         setAuthorizationHeader(accessToken)

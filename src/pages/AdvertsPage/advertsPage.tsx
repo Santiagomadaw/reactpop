@@ -27,9 +27,6 @@ export default function AdvertsPage() {
             }
         };
         getDatad();
-        return () => {
-            console.log('unmount');
-        };
     }, []);
 
     const FilterOption = (filtersState: IpropsFilter): IAds[] => {
@@ -55,6 +52,14 @@ export default function AdvertsPage() {
                 );
                 
         }
+        if (filtersState.price) {
+            filteredAds = filteredAds.filter((ad) => {
+                if (Array.isArray(filtersState.price)) {
+                    return ad.price >= filtersState.price[0] && ad.price <= filtersState.price[1];
+                }
+                return false;
+            });
+        }
         return filteredAds;
     };
 
@@ -63,7 +68,6 @@ export default function AdvertsPage() {
         sellAds = FilterOption(filtersState);
         Button
     }
-    console.log(sellAds.length)
     return (
         <Layout>
             <StyledAdList className='ad-list'>

@@ -8,7 +8,6 @@ import RawSwitch from '../../components/shared/Switch.tsx';
 import Select from '../../components/shared/Select.tsx';
 import getTags from '../../components/layout/services.ts';
 import { postAd } from './services.ts';
-import { client } from '../../utils/api/client.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
 
@@ -25,7 +24,6 @@ export default function NewAdvertPage() {
     const [error, setError] = useState<string | null>(null);
     const resetError = () => setError(null);
 
-    client.defaults.headers.post['Content-Type'] = 'multipart/form-data';
     const { name, price, tags, sale } = formValues;
 
     const buttonDisabled = !name || !price || !tags.length;
@@ -64,13 +62,11 @@ export default function NewAdvertPage() {
         const extension = fileName
             .slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2)
             .toLowerCase();
-            console.log(extension)
         return validExtensions.includes(extension);
     }
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         if (file && hasValidExtension(file.name)) {
-            
                 const formData = new FormData();
                 formData.append('photo', file);
                 setFormValues((currentFormValues) => ({
@@ -87,17 +83,16 @@ export default function NewAdvertPage() {
             navigate(to, { replace: true });
     }
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+
+
         try {
             event.preventDefault();
-            await postAd(formValues);
-            const to = location.state?.from || '/';
-            navigate(to, { replace: true });
-        } catch (error) {
+            const response = await postAd(formValues)
             
-            if (error) {
+            navigate(`/adverts/${response.data.id}`, { replace: true });
+        } catch (error) {
                 const msg: string = (error as Error).message;
                 setError(`Error fetching new ad: ${msg}`);
-            }
         }
     };
     useEffect(() => {
@@ -106,10 +101,8 @@ export default function NewAdvertPage() {
                 const tags = await getTags();
                 setTags(tags.data);
             } catch (error) {
-                if (error) {
                     const msg: string = (error as Error).message;
-                    setError(`Error fetching tags: ${msg}`);
-                }
+                    setError(`Error fetching tags: ${msg}`)
             }
         };
         getDataTags();
@@ -159,6 +152,7 @@ export default function NewAdvertPage() {
                         name='photo'
                         id='photo'
                         onChange={handleFileUpload}
+                        accept="image/png, image/jpeg"
                     />
                     <RawSwitch
                         Name='sale'

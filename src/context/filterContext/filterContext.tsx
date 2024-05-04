@@ -1,11 +1,6 @@
 import { ReactElement, useState } from 'react';
 import { FilterContext } from './filterCustomHook';
-
-export interface IpropsFilter {
-    search: string;
-    tags: string[];
-    buysell: 'all' | 'sell' | 'buy';
-}
+import { IpropsFilter } from '../../interfaces/interfaces';
 
 interface IFilterContextProviderProps {
     children: ReactElement;
@@ -19,12 +14,14 @@ export interface IFilterValue {
 
 export default function FilterContextProvider({
     children,
-    filters={search:'',tags:[],buysell:'all' },
+    filters
 }: IFilterContextProviderProps) {
-    const [filtersState, setFiltersState] = useState<IpropsFilter>(filters);
-
-    const updateFilters: IFilterValue['updateFilters'] = (filter: IpropsFilter) => {
-        
+    console.log(filters)
+    const [filtersState, setFiltersState] = useState<IpropsFilter>({ search: '', tags: [], buysell: 'all', price: [0, 10000] });
+    console.log(filtersState);
+    const updateFilters: IFilterValue['updateFilters'] = (
+        filter: IpropsFilter
+    ) => {
         setFiltersState(filter);
     };
 

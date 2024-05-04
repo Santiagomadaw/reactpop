@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import Button from '../../components/shared/Button.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { login } from './services.ts';
@@ -27,6 +28,12 @@ export default function LoginPage() {
             [event.target.name]: event.target.value,
         }));
     };
+    const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormValues((currentFormValues) => ({
+            ...currentFormValues,
+            [event.target.name]: event.target.checked,
+        }));
+    };
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -42,12 +49,7 @@ export default function LoginPage() {
             }
         }
     };
-    const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormValues((currentFormValues) => ({
-            ...currentFormValues,
-            [event.target.name]: event.target.checked,
-        }));
-    };
+    
     const { email, password } = formValues;
     const buttonDisabled = !email || !password;
     return (
