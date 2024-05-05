@@ -137,8 +137,8 @@ export default function Header() {
                             />
                             {Array.isArray(filtersState.price) && (
                                 <div className='slidertext'>
-                                    <h3>{filtersState.price[0]}€</h3>
-                                    <h3>{filtersState.price[1]}€</h3>
+                                    <h5>{filtersState.price[0]}€</h5>
+                                    <h5>{filtersState.price[1]}€</h5>
                                 </div>
                             )}
                         </div>
@@ -215,6 +215,7 @@ export default function Header() {
                                     onClick={handleLogoutClick}
                                     id='logOutButton'
                                     $customheight='25px'
+                                    $customwidth='140px'
                                 >
                                     Logout
                                 </Button>
@@ -226,10 +227,23 @@ export default function Header() {
                                     to='/adverts/new'
                                     state={{ from: location.pathname }}
                                     $customheight='25px'
-                                    $customwidth='max-content'
+                                    $customwidth='140px'
                                     replace
                                 >
                                     Nuevo Anuncio
+                                </Button>
+                            </li>
+                            <li>
+                                <Button
+                                    className='goads'
+                                    as={Link}
+                                    to='/adverts'
+                                    state={{ from: location.pathname }}
+                                    $customheight='25px'
+                                    $customwidth='140px'
+                                    replace
+                                >
+                                    Anuncios
                                 </Button>
                             </li>
                         </ul>
@@ -257,8 +271,9 @@ const StyledHeader = styled.header`
     .formslider{
         display:flex;
         flex-direction: column;
-        justify-items:center;
+        justify-content: space-between;
         width:100%;
+        height:100%;
         .rc-slider{
             width:98%;
             margin:auto;
@@ -267,7 +282,7 @@ const StyledHeader = styled.header`
         .slidertext{
             display:flex;
             justify-content: space-between;
-            h3{
+            h5{
                 color:var(--text-100);
             }
         }
