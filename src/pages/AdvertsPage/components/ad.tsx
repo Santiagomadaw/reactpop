@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { IAds } from '../../../interfaces/interfaces';
 import styled from 'styled-components';
+import noImg from '../../../assets/no-image-svgrepo-com.svg';
 
 export default function SingleAd({ id, photo, name, price, sale, tags }: IAds) {
     return (
@@ -10,11 +11,19 @@ export default function SingleAd({ id, photo, name, price, sale, tags }: IAds) {
         >
             <StyledSingleAd className='single-ad'>
                 <div className='img-container'>
-                    <img
-                        src={photo}
-                        alt=''
-                    />
+                    {photo ? (
+                        <img
+                            src={photo}
+                            alt={'Imagen de'+ name}
+                        />
+                    ) : (
+                        <img className='noImg'
+                            src={noImg}
+                            alt='Articulo sin foto'
+                        />
+                    )}
                 </div>
+                <div className="textcontainer">
                 <strong className=''>{price} €</strong>
                 <p className='item'>{name}</p>
                 <p className='task sell'>{sale ? 'Venta' : 'Compra'}</p>
@@ -28,11 +37,14 @@ export default function SingleAd({ id, photo, name, price, sale, tags }: IAds) {
                         </div>
                     ))}
                 </div>
+                </div>
+                
             </StyledSingleAd>
         </Link>
     );
 }
 const StyledSingleAd = styled.div`
+
     box-shadow: 0px 0px 9px 4px rgba(0, 0, 0, 0.75);
     display: flex;
     flex-direction: column;
@@ -42,52 +54,72 @@ const StyledSingleAd = styled.div`
     gap: 4px;
     transition: 0.09s;
     border-radius: 10px;
-    padding: 10px;
+    padding-bottom: 10px;
+
     background: var(--accent-200);
-    .item {
+    & .item {
         margin: 0;
         color: var(--accent-100);
         font-size: 16px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        
     }
-    .img-container {
+    & .img-container {
         display: flex;
         max-width: 100%;
         height: 200px;
         max-height: 200px;
+        justify-content: center;
 
-        border-radius: 5px 5px 0 0;
         align-items: center;
         background: var(--accent-100);
         overflow: hidden;
+        &:has(.noImg) img {
+            width: 40%;
+            height: 40%;
+            object-fit: cover;
+            
+        }
         & img {
-            border-radius: 5px 5px 0 0;
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
         }
+        & .noImg{
+            opacity: 0.6;
+        }
     }
+    & .textcontainer{
+        display:flex;
+        flex-direction: column;
+        gap: 4px;
+        padding-left: 10px;
+        padding-right: 10px;
+        
+    }
+
     & strong {
         font-size: large;
         color: var(--accent-100);
     }
-    .task {
+    & .task {
         text-align: center;
         padding: 3px 5px;
         border-radius: 3px;
         color: var(--text-200);
         height: fit-content;
         background: var(--bg-200);
+        gap: 4px;
     }
-    .tags-container {
+    & .tags-container {
         display: flex;
         overflow: hidden;
         height: fit-content;
         gap: 4px;
     }
-    .sell {
+    & .sell {
         color: var(--text-100);
         background: var(--accent-100);
     }

@@ -8,8 +8,10 @@ interface IFilterContextProviderProps {
 }
 
 export interface IFilterValue {
+    maxPriceSlide: number;
     filtersState: IpropsFilter;
     updateFilters: (filters: IpropsFilter) => void;
+    updateSlider: (slide: number) => void;
 }
 
 export default function FilterContextProvider({
@@ -21,13 +23,23 @@ export default function FilterContextProvider({
         buysell: 'all',
         price: [0, 900000],
     });
+    const [maxPriceSlide, setSliderState] = useState<number>(99999);
+
     const updateFilters: IFilterValue['updateFilters'] = (
         filter: IpropsFilter,
     ) => {
         setFiltersState(filter);
     };
+    const updateSlider = (slide: number) => {
+        setSliderState(slide);
+    };
 
-    const value: IFilterValue = { filtersState, updateFilters };
+    const value: IFilterValue = {
+        maxPriceSlide,
+        filtersState,
+        updateFilters,
+        updateSlider,
+    };
 
     return (
         <FilterContext.Provider value={value}>

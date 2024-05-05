@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+# Dashboard de Anuncios - Práctica de Fundamentos de React con Vite y TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Bienvenido al proyecto de Dashboard de Anuncios! Este proyecto, desarrollado con Vite, TypeScript y React, te ofrece una aplicación de dashboard para gestionar el API de anuncios Nodepop. 
 
-Currently, two official plugins are available:
+## Descripción del Proyecto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+El objetivo principal de este proyecto es crear una aplicación de tipo dashboard que actúe como interfaz gráfica para gestionar el API de anuncios Nodepop. El backend de la aplicación utiliza el proyecto [nodepop-api](https://github.com/davidjj76/nodepop-api), mientras que el frontend está desarrollado en React utilizando Vite como herramienta de construcción y TypeScript para una tipificación robusta.
 
-## Expanding the ESLint configuration
+## Backend
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+El backend de la aplicación está alojado en un servidor local y proporciona una serie de endpoints para la gestión de usuarios y anuncios. Algunos de los endpoints disponibles son:
 
-- Configure the top-level `parserOptions` property like this:
+- **/api/auth/signup**: Permite crear nuevos usuarios.
+- **/api/auth/me**: Obtiene la información del usuario autenticado.
+- **/api/auth/login**: Permite iniciar sesión y obtener un token de acceso.
+- **/api/v1/adverts**: Proporciona un listado de anuncios y permite aplicar diversos filtros.
+- **/api/v1/adverts/tags**: Obtiene el listado de tags disponibles.
+- **/api/v1/adverts/:id**: Permite obtener información detallada de un anuncio específico y borrarlo si es necesario.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Todos los endpoints bajo `/adverts` requieren autenticación mediante un token proporcionado en el endpoint de login.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Frontend
+
+El frontend de la aplicación es una Single Page Application desarrollada en React con Vite y TypeScript. Se han implementado diversas rutas para gestionar las diferentes páginas y componentes de la aplicación, como:
+
+- **/login**: Página de inicio de sesión.
+- **/adverts**: Página principal de anuncios.
+- **/adverts/:id**: Página de detalle de un anuncio.
+- **/adverts/new**: Página para crear un nuevo anuncio.
+- **/404**: Página de error 404 para rutas inexistentes.
+
+## Funcionalidades Principales
+
+- **LoginPage**: Permite iniciar sesión con email y contraseña.
+- **AdvertsPage**: Muestra un listado de anuncios con opción de aplicar filtros.
+- **AdvertPage**: Muestra detalles de un anuncio y permite borrarlo.
+- **NewAdvertPage**: Permite crear un nuevo anuncio con todos los detalles necesarios.
+
+Además, se ha implementado un componente para el logout cuando el usuario está autenticado.
+
+## Consideraciones Importantes
+
+- **Estilos**: Se han utilizado styled-components para los estilos de la aplicación, proporcionando una forma flexible y eficiente de gestionar los estilos en los componentes de React.
+- **Código**: Para asegurar código limpio y bien organizado se ha usado Prettier y aprovechando las ventajas de TypeScript para una tipificación sólida y segura.
+
+
+
+---

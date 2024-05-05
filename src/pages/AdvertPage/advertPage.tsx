@@ -8,6 +8,7 @@ import { useConfirm } from '../../context/confirmationContext/confirmCustomHook.
 import Button from '../../components/shared/Button.tsx';
 import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
 import styled from 'styled-components';
+import noImg from '../../assets/no-image-svgrepo-com.svg';
 
 export default function AdvertPage() {
     const [ad, setAd] = useState<IAds>();
@@ -73,26 +74,34 @@ export default function AdvertPage() {
             <StyledAdvertPage className='advert'>
                 {ad && (
                     <>
-                        <div className='img-container'>
-                            <img
-                                src={ad.photo}
-                                alt=''
-                            />
+                        <div className='advert-img-container'>
+                            {ad.photo ? (
+                                <img
+                                    src={ad.photo}
+                                    alt={'Imagen de' + name}
+                                />
+                            ) : (
+                                <img
+                                    className='advert-noImg'
+                                    src={noImg}
+                                    alt='Articulo sin foto'
+                                />
+                            )}
                         </div>
-                        <div className='priceNameBlock'>
+                        <div className='advert-priceNameBlock'>
                             <h2>{ad.name}</h2>
                             <h2>{`${ad.price}  €`}</h2>
                         </div>
-                        <div className='tags-container'>
+                        <div className='advert-tags-container'>
                             {ad.tags.map((tag, index) => (
                                 <div
                                     key={index}
-                                    className='tagLink'
+                                    className='advert-tagLink'
                                 >
                                     {tag}
                                 </div>
                             ))}
-                            <div className='tagLink'>
+                            <div className='advert-tagLink'>
                                 {ad.sale ? 'Venta' : 'Compra'}
                             </div>
                         </div>
@@ -116,7 +125,7 @@ export default function AdvertPage() {
                 )}
                 {error && (
                     <ErrorMessage
-                        className='loginPage-error'
+                        className='advert-loginPage-error'
                         onClick={resetError}
                     >
                         <h3>{error.toUpperCase()}</h3>
@@ -140,56 +149,64 @@ padding: 20px 10px;
 border-radius: 10px;
 gap:10px;
 margin: 0 auto;
-h2, h1{
+& h2, h1{
     margin-left: 14px;
     color: var(--text-200);
 }
 
 
 }
-.priceNameBlock{
+& .advert-priceNameBlock{
 display: flex;
 flex-direction: column;
 align-items: start;
 width: 100%;
 
 }
-.img-container{
-margin-bottom: 20px;
-display: flex;
-width: 640px;
-max-width: 96%;
-height: 480px;
-border-radius: 10px;
-align-items: center;
-background:var(--accent-100);
-overflow: hidden;
-& img {
-    width: auto;
-    height: auto;
-    max-width: none; 
-    max-height: none;
-    min-width: 100%; 
-    min-height: 100%;
-    object-fit: cover;
-    
-}
+& .advert-img-container{
+    margin-bottom: 20px;
+    display: flex;
+    width: 640px;
+    max-width: 96%;
+    height: 480px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    background:var(--accent-100);
+    overflow: hidden;
+
+    &:has(.advert-noImg) img {
+        width: 40%;
+        height: 40%;
+        object-fit: cover;
+        
+    }
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        
+    }
+    & .advert-noImg{
+        opacity: 0.6;
+    }
 
 }
 
 
-.tags-container{
-display: flex;
-overflow: hidden;
-height: fit-content;
-gap: 4px;
-& .tagLink{
-    text-align: center;
-    padding: 3px 5px;
-    border-radius: 3px;
-    color: var(--text-200);
+& .advert-tags-container{
+    display: flex;
+    overflow: hidden;
     height: fit-content;
-    background: var(--bg-200);
+    gap: 4px;
+    & .advert-tagLink{
+        text-align: center;
+        padding: 3px 5px;
+        border-radius: 3px;
+        color: var(--text-200);
+        height: fit-content;
+        background: var(--bg-200);
+    }
 }
-
     `;

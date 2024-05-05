@@ -5,7 +5,7 @@ interface ISelect {
 }
 
 const Select = styled.select<ISelect>`
-    font-size: large;
+    font-size: medium;
     appearance: none;
     overflow: auto;
     height: ${(props) => props.$customheight || '30px'};

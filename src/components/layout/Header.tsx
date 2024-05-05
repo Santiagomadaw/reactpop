@@ -17,15 +17,10 @@ import 'rc-slider/assets/index.css';
 export default function Header() {
     const [tags, setTags] = useState<string[]>([]);
     const { logState, onLogout } = useAuth();
-    const { filtersState, updateFilters } = useFilterContext();
+    const { maxPriceSlide, filtersState, updateFilters } = useFilterContext();
     const { confirmState, onUnhidden, onSession, onCancel } = useConfirm();
     const [gonnaLogout, setGonnaLogout] = useState<boolean>();
-    let minPrice: number = 0;
-    let maxPrice: number = 0;
-    if (Array.isArray(filtersState.price)) {
-        minPrice = filtersState.price[0];
-        maxPrice = filtersState.price[1];
-    }
+    const maxPrice: number = maxPriceSlide;
 
     const handleLogoutClick = () => {
         setGonnaLogout(true);
@@ -135,7 +130,7 @@ export default function Header() {
                             <Slider
                                 value={filtersState.price}
                                 range
-                                min={minPrice}
+                                min={0}
                                 max={maxPrice}
                                 step={10}
                                 onChange={handleChangeSlide}

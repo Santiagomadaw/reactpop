@@ -8,13 +8,14 @@ import { useFilterContext } from '../../context/filterContext/filterCustomHook.t
 import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
 import Button from '../../components/shared/Button.tsx';
 import Noad from './components/Noad.tsx';
+
 function findHighestPrice(ads: IAds[]): number {
     return ads.reduce((maxPrice, ad) => {
         return ad.price > maxPrice ? ad.price : maxPrice;
     }, 0);
 }
 export default function AdvertsPage() {
-    const { filtersState, updateFilters } = useFilterContext();
+    const { filtersState, updateSlider, updateFilters } = useFilterContext();
     const [ads, setAds] = useState<IAds[]>([]);
     const [error, setError] = useState<string | null>(null);
     const resetError = () => setError(null);
@@ -23,7 +24,11 @@ export default function AdvertsPage() {
             try {
                 const ads = await getAds();
                 setAds(ads.data);
+                //Cargo los valores del Slide en el contexto
+                //de este modo el valor maximo de la barra sera
+                //el de nuestro articulo mas caro
                 const maxprice = findHighestPrice(ads.data);
+                updateSlider(maxprice);
                 updateFilters({ ...filtersState, price: [0, maxprice] });
             } catch (error) {
                 if (error) {
@@ -33,8 +38,6 @@ export default function AdvertsPage() {
             }
         };
         getDatad();
-        const maxprice = findHighestPrice(ads);
-        updateFilters({ ...filtersState, price: [0, maxprice] });
     }, []);
 
     const FilterOption = (filtersState: IpropsFilter): IAds[] => {
