@@ -13,18 +13,16 @@ export interface IConfirmValue {
     onHidden: () => void;
     onUnhidden: () => void;
     textState: string;
-    onSession:  () => void;
+    onSession: () => void;
     onDeleter: () => void;
 }
-
-
 
 export default function ConfirmContextProvider({
     defaultConfirmState,
     defaulthiddenState,
     children,
 }: IConfirmContextProviderProps) {
-/* --------------------------------------------------------------- */
+    /* --------------------------------------------------------------- */
     const [confirmState, setAcceptState] = useState(defaultConfirmState);
     const setAccept = () => setAcceptState(true);
     const setCancel = () => setAcceptState(false);

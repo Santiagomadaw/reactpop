@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-interface ISwitch{ 
+interface ISwitch {
     checked: boolean;
-    onChange:(event:React.ChangeEvent<HTMLInputElement>) => void
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     Leftname?: string;
     Rightname?: string;
     Name?: string;
@@ -20,7 +20,7 @@ const Switch = styled.div`
         width: 60px;
         height: 34px;
     }
-    .switchtext, {
+    .switchtext {
         color: var(--text-100);
     }
     .switch input {
@@ -36,27 +36,27 @@ const Switch = styled.div`
         right: 0;
         bottom: 0;
         background-color: var(--bg-200);
-        -webkit-transition: .4s;
-        transition: .4s;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
     }
     .slider:before {
         position: absolute;
-        content: "";
+        content: '';
         height: 26px;
         width: 26px;
         left: 4px;
         bottom: 4px;
         background-color: var(--text-100);
-        -webkit-transition: .4s;
-        transition: .4s;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
     }
-    input:checked+.slider {
+    input:checked + .slider {
         background-color: var(--bg-200);
     }
-    input:focus+.slider {
+    input:focus + .slider {
         box-shadow: 0 0 1px var(--primary-100);
     }
-    input:checked+.slider:before {
+    input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
@@ -67,7 +67,7 @@ const Switch = styled.div`
     .slider.round:before {
         border-radius: 50%;
     }
-    .switch-container{
+    .switch-container {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -75,9 +75,13 @@ const Switch = styled.div`
         width: 100%;
         gap: 4px;
     }
-    
 `;
-const RawSwitch = ({  onChange, Leftname='',Rightname='',Name='switch' }:ISwitch) => {
+const RawSwitch = ({
+    onChange,
+    Leftname = '',
+    Rightname = '',
+    Name = 'switch',
+}: ISwitch) => {
     const [isChecked, setIsChecked] = useState(false);
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsChecked(event.target.checked);

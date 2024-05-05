@@ -20,14 +20,13 @@ export default function Header() {
     const { filtersState, updateFilters } = useFilterContext();
     const { confirmState, onUnhidden, onSession, onCancel } = useConfirm();
     const [gonnaLogout, setGonnaLogout] = useState<boolean>();
-    let minPrice:number=0
-    let maxPrice:number=0
-        if(Array.isArray(filtersState.price)){
-            minPrice = filtersState.price[0];
-            maxPrice = filtersState.price[1];
-        }
-    
-    console.log(filtersState);
+    let minPrice: number = 0;
+    let maxPrice: number = 0;
+    if (Array.isArray(filtersState.price)) {
+        minPrice = filtersState.price[0];
+        maxPrice = filtersState.price[1];
+    }
+
     const handleLogoutClick = () => {
         setGonnaLogout(true);
         onSession();
@@ -49,7 +48,7 @@ export default function Header() {
     const handleChangeSlide = (event: number | number[]) => {
         if (Array.isArray(event)) {
             const currentFilterState = (
-                currentFilterState: IpropsFilter
+                currentFilterState: IpropsFilter,
             ): IpropsFilter => {
                 return {
                     ...currentFilterState,
@@ -60,11 +59,10 @@ export default function Header() {
         }
     };
     const handleChange = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
-        console.log(event);
         const currentFilterState = (
-            currentFilterState: IpropsFilter
+            currentFilterState: IpropsFilter,
         ): IpropsFilter => {
             return {
                 ...currentFilterState,
@@ -74,13 +72,13 @@ export default function Header() {
         updateFilters(currentFilterState(filtersState));
     };
     const handleChangeMultiSelect = (
-        event: React.ChangeEvent<HTMLSelectElement>
+        event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
         const options = Array.from(event.target.selectedOptions).map(
-            (option) => option.value
+            (option) => option.value,
         );
         const currentFilterState = (
-            currentFilterState: IpropsFilter
+            currentFilterState: IpropsFilter,
         ): IpropsFilter => {
             return {
                 ...currentFilterState,
@@ -95,9 +93,10 @@ export default function Header() {
             search: '',
             tags: [],
             buysell: 'all',
-            price: [0, 100000],
+            price: [0, maxPrice],
         });
     };
+
     //Useffect
     useEffect(() => {
         const getDataTags = async () => {
@@ -125,8 +124,8 @@ export default function Header() {
                     <Form id='search'>
                         <div className='formslider'>
                             <FormField
-                                customheight='25px'
-                                customwidth='100%'
+                                $customheight='25px'
+                                $customwidth='100%'
                                 type='text'
                                 placeholder='Buscar'
                                 name='search'
@@ -150,39 +149,55 @@ export default function Header() {
                         </div>
 
                         <Select
-                            customheight='initial'
-                            customwidth='120px'
+                            $customheight='initial'
+                            $customwidth='120px'
                             name='tags'
                             id='tagsSelect'
                             value={filtersState.tags}
                             multiple
                             onChange={handleChangeMultiSelect}
                         >
-                            <option value='' disabled>
+                            <option
+                                value=''
+                                disabled
+                            >
                                 --Tags--
                             </option>
                             {tags.map((tag, index) => (
-                                <option value={tag} id={tag} key={index}>
+                                <option
+                                    value={tag}
+                                    id={tag}
+                                    key={index}
+                                >
                                     {tag}
                                 </option>
                             ))}
                         </Select>
                         <div className='selectbutton'>
                             <Select
-                                customheight='25px'
-                                customwidth='100px'
+                                $customheight='25px'
+                                $customwidth='100px'
                                 name='buysell'
                                 id='buysell'
                                 value={filtersState.buysell}
                                 onChange={handleChange}
                             >
-                                <option value='all' disabled>
+                                <option
+                                    value='all'
+                                    disabled
+                                >
                                     --Option--
                                 </option>
-                                <option value='buy' id='buy'>
+                                <option
+                                    value='buy'
+                                    id='buy'
+                                >
                                     Compra
                                 </option>
-                                <option value='sell' id='sell'>
+                                <option
+                                    value='sell'
+                                    id='sell'
+                                >
                                     Venta
                                 </option>
                             </Select>
@@ -190,8 +205,8 @@ export default function Header() {
                             <Button
                                 id='searchbutton'
                                 onClick={handleClear}
-                                customheight='25px'
-                                customwidth='100px'
+                                $customheight='25px'
+                                $customwidth='100px'
                             >
                                 Reset
                             </Button>
@@ -204,7 +219,7 @@ export default function Header() {
                                     className='login'
                                     onClick={handleLogoutClick}
                                     id='logOutButton'
-                                    customheight='25px'
+                                    $customheight='25px'
                                 >
                                     Logout
                                 </Button>
@@ -215,8 +230,8 @@ export default function Header() {
                                     as={Link}
                                     to='/adverts/new'
                                     state={{ from: location.pathname }}
-                                    customheight='25px'
-                                    customwidth='max-content'
+                                    $customheight='25px'
+                                    $customwidth='max-content'
                                     replace
                                 >
                                     Nuevo Anuncio

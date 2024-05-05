@@ -34,10 +34,10 @@ export default function NewAdvertPage() {
         }));
     };
     const handleChangeMultiSelect = (
-        event: React.ChangeEvent<HTMLSelectElement>
+        event: React.ChangeEvent<HTMLSelectElement>,
     ) => {
         const options = Array.from(event.target.selectedOptions).map(
-            (option) => option.value
+            (option) => option.value,
         );
         setFormValues((currentFormValues) => ({
             ...currentFormValues,
@@ -51,14 +51,7 @@ export default function NewAdvertPage() {
         }));
     };
     function hasValidExtension(fileName: string) {
-        const validExtensions = [
-            'jpg',
-            'jpeg',
-            'png',
-            'gif',
-            'bmp',
-            'svg',
-        ];
+        const validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
         const extension = fileName
             .slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2)
             .toLowerCase();
@@ -67,32 +60,29 @@ export default function NewAdvertPage() {
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         if (file && hasValidExtension(file.name)) {
-                const formData = new FormData();
-                formData.append('photo', file);
-                setFormValues((currentFormValues) => ({
-                    ...currentFormValues,
-                    [event.target.name]: file,
-                }));
-            } else {
-                setError('Formato de imagen no valido');
-            }
-        
+            const formData = new FormData();
+            formData.append('photo', file);
+            setFormValues((currentFormValues) => ({
+                ...currentFormValues,
+                [event.target.name]: file,
+            }));
+        } else {
+            setError('Formato de imagen no valido');
+        }
     };
-    const handleBack = () =>{
+    const handleBack = () => {
         const to = location.state?.from || '/';
-            navigate(to, { replace: true });
-    }
+        navigate(to, { replace: true });
+    };
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-
-
         try {
             event.preventDefault();
-            const response = await postAd(formValues)
-            
+            const response = await postAd(formValues);
+
             navigate(`/adverts/${response.data.id}`, { replace: true });
         } catch (error) {
-                const msg: string = (error as Error).message;
-                setError(`Error fetching new ad: ${msg}`);
+            const msg: string = (error as Error).message;
+            setError(`Error fetching new ad: ${msg}`);
         }
     };
     useEffect(() => {
@@ -101,8 +91,8 @@ export default function NewAdvertPage() {
                 const tags = await getTags();
                 setTags(tags.data);
             } catch (error) {
-                    const msg: string = (error as Error).message;
-                    setError(`Error fetching tags: ${msg}`)
+                const msg: string = (error as Error).message;
+                setError(`Error fetching tags: ${msg}`);
             }
         };
         getDataTags();
@@ -110,49 +100,65 @@ export default function NewAdvertPage() {
     return (
         <Layout>
             <section className='new-ad-contianer'>
-                <Form id='ad-form' variant='column' customwidth='350px'>
-                    <label htmlFor='name'><h4>Articulo:</h4></label>
+                <Form
+                    id='ad-form'
+                    $variant='column'
+                    $customwidth='350px'
+                >
+                    <label htmlFor='name'>
+                        <h4>Articulo:</h4>
+                    </label>
                     <FormField
                         type='text'
                         name='name'
                         id='name'
-                        customwidth='100%'
+                        $customwidth='100%'
                         onChange={handleChange}
                         required
                     />
-                    <label htmlFor='price'><h4>Price:</h4></label>
+                    <label htmlFor='price'>
+                        <h4>Price:</h4>
+                    </label>
                     <FormField
                         type='number'
                         step='0.01'
                         name='price'
                         id='price'
-                        customwidth='100%'
+                        $customwidth='100%'
                         onChange={handleChange}
                         required
                     />
-                    <label htmlFor='tags'><h4>Etiquetas:</h4></label>
+                    <label htmlFor='tags'>
+                        <h4>Etiquetas:</h4>
+                    </label>
                     <Select
                         name='tags'
                         id='tags'
-                        customwidth='100%'
-                        customheight='inered'
+                        $customwidth='100%'
+                        $customheight='inered'
                         multiple
                         onChange={handleChangeMultiSelect}
                         required
                     >
                         {optionTags.map((tag, index) => (
-                            <option value={tag} id={tag} key={index}>
+                            <option
+                                value={tag}
+                                id={tag}
+                                key={index}
+                            >
                                 {tag}
                             </option>
                         ))}
                     </Select>
-                    <label htmlFor='photo'><h4>Foto:</h4></label>
+                    <label htmlFor='photo'>
+                        <h4>Foto:</h4>
+                    </label>
                     <input
                         type='file'
                         name='photo'
                         id='photo'
                         onChange={handleFileUpload}
-                        accept="image/png, image/jpeg"
+                        accept='image/png, image/jpeg'
                     />
                     <RawSwitch
                         Name='sale'
@@ -165,7 +171,7 @@ export default function NewAdvertPage() {
                         <Button
                             type='button'
                             className='backButton'
-                            customwidth='50%'
+                            $customwidth='50%'
                             onClick={handleBack}
                         >
                             Volver
@@ -174,21 +180,20 @@ export default function NewAdvertPage() {
                             type='submit'
                             disabled={buttonDisabled}
                             className='newAdButton'
-                            customwidth='50%'
+                            $customwidth='50%'
                             onClick={handleSubmit}
                         >
                             Crear anuncio
                         </Button>
-                        
                     </div>
                     {error && (
-                            <ErrorMessage
-                                className='loginPage-error'
-                                onClick={resetError}
-                            >
-                                <h3>{error.toUpperCase()}</h3>
-                            </ErrorMessage>
-                        )}
+                        <ErrorMessage
+                            className='loginPage-error'
+                            onClick={resetError}
+                        >
+                            <h3>{error.toUpperCase()}</h3>
+                        </ErrorMessage>
+                    )}
                 </Form>
             </section>
         </Layout>

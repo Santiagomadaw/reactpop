@@ -10,20 +10,28 @@ import ConfirmContextProvider from './context/confirmationContext/confirmationCo
 
 const accessToken = localStorage.getItem('auth');
 if (accessToken) {
-  
     setAuthorizationHeader(accessToken);
 }
 
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <BrowserRouter>
-      <ConfirmContextProvider defaultConfirmState={false} defaulthiddenState={true}>
-        <LogContextProvider defaultState={!!accessToken}>
-        <FilterContextProvider children={ <App />} filters={{ search: '', tags: [], buysell: 'all' }}>
-        </FilterContextProvider>
-        </LogContextProvider>
-        </ConfirmContextProvider>
-      </BrowserRouter>
-    </React.StrictMode>
+        <BrowserRouter>
+            <ConfirmContextProvider
+                defaultConfirmState={false}
+                defaulthiddenState={true}
+            >
+                <LogContextProvider defaultState={!!accessToken}>
+                    <FilterContextProvider
+                        children={<App />}
+                        filters={{
+                            search: '',
+                            tags: [],
+                            buysell: 'all',
+                            price: 0,
+                        }}
+                    ></FilterContextProvider>
+                </LogContextProvider>
+            </ConfirmContextProvider>
+        </BrowserRouter>
+    </React.StrictMode>,
 );

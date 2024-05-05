@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export const client = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -11,8 +11,8 @@ export const removeAuthorizationHeader = () => {
     delete client.defaults.headers.common['Authorization'];
 };
 client.interceptors.response.use(
-    response => response,
-    error => {
+    (response) => response,
+    (error) => {
         if (error.response) {
             //Server error
             return Promise.reject({

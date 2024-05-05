@@ -74,7 +74,10 @@ export default function AdvertPage() {
                 {ad && (
                     <>
                         <div className='img-container'>
-                            <img src={ad.photo} alt='' />
+                            <img
+                                src={ad.photo}
+                                alt=''
+                            />
                         </div>
                         <div className='priceNameBlock'>
                             <h2>{ad.name}</h2>
@@ -82,7 +85,10 @@ export default function AdvertPage() {
                         </div>
                         <div className='tags-container'>
                             {ad.tags.map((tag, index) => (
-                                <div key={index} className='tagLink'>
+                                <div
+                                    key={index}
+                                    className='tagLink'
+                                >
                                     {tag}
                                 </div>
                             ))}
@@ -94,12 +100,15 @@ export default function AdvertPage() {
                             <Button
                                 id='removeAdButton'
                                 onClick={handleDeleteAd}
-                                customheight='28px'
+                                $customheight='28px'
                             >
                                 Borrar
                             </Button>
 
-                            <Button id='backButton' customheight='28px'>
+                            <Button
+                                id='backButton'
+                                $customheight='28px'
+                            >
                                 Volver
                             </Button>
                         </div>
@@ -183,4 +192,4 @@ gap: 4px;
     background: var(--bg-200);
 }
 
-    `
+    `;

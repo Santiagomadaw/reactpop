@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
 export interface IAds {
     id: string;
@@ -8,7 +8,6 @@ export interface IAds {
     price: number;
     tags: string[];
     photo: string;
-    
 }
 export interface ILogin {
     email: string;
@@ -20,7 +19,6 @@ export interface IpropsFilter {
     tags: string[];
     buysell: 'all' | 'sell' | 'buy';
     price: number[] | number;
-    
 }
 
 export interface IFilterContextProviderProps {

@@ -14,13 +14,15 @@ export interface IFilterValue {
 
 export default function FilterContextProvider({
     children,
-    filters
 }: IFilterContextProviderProps) {
-    console.log(filters)
-    const [filtersState, setFiltersState] = useState<IpropsFilter>({ search: '', tags: [], buysell: 'all', price: [0, 10000] });
-    console.log(filtersState);
+    const [filtersState, setFiltersState] = useState<IpropsFilter>({
+        search: '',
+        tags: [],
+        buysell: 'all',
+        price: [0, 900000],
+    });
     const updateFilters: IFilterValue['updateFilters'] = (
-        filter: IpropsFilter
+        filter: IpropsFilter,
     ) => {
         setFiltersState(filter);
     };

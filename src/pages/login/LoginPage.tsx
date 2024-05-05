@@ -49,25 +49,29 @@ export default function LoginPage() {
             }
         }
     };
-    
+
     const { email, password } = formValues;
     const buttonDisabled = !email || !password;
     return (
         <Layout>
             <StyledLogin className='loginPage'>
                 <h1 className='loginPage-title'>Login</h1>
-                <Form id='login-form' variant='column' customwidth='100%'>
+                <Form
+                    id='login-form'
+                    $variant='column'
+                    $customwidth='100%'
+                >
                     <FormField
-                        customheight='38px'
-                        customwidth='100%'
+                        $customheight='38px'
+                        $customwidth='100%'
                         type='text'
                         name='email'
                         id='email'
                         onChange={handleChange}
                     />
                     <FormField
-                        customheight='38px'
-                        customwidth='100%'
+                        $customheight='38px'
+                        $customwidth='100%'
                         type='password'
                         name='password'
                         id='password'
@@ -84,16 +88,18 @@ export default function LoginPage() {
                         disabled={buttonDisabled}
                         className='loginButton'
                         onClick={handleSubmit}
-                        customwidth='100%'
+                        $customwidth='100%'
                     >
                         Login
                     </Button>
-                    {error && <ErrorMessage
-                        className='loginPage-error'
-                        onClick={resetError}
-                    >
-                        <h3>{error.toUpperCase()}</h3>
-                    </ErrorMessage>}
+                    {error && (
+                        <ErrorMessage
+                            className='loginPage-error'
+                            onClick={resetError}
+                        >
+                            <h3>{error.toUpperCase()}</h3>
+                        </ErrorMessage>
+                    )}
                 </Form>
             </StyledLogin>
         </Layout>

@@ -8,39 +8,63 @@ import AdvertPage from './pages/AdvertPage/advertPage.tsx';
 import Confirmator from './components/shared/Confirmator.tsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.tsx';
 
-
 function App() {
-    return (<>
-        <Confirmator />
-        <Routes>
-            <Route path='/login' element={<LoginPage />} />
-            <Route
-                path='/adverts'
-                element={
-                    <RequireAuth>
-                        <div className='container'>
-                            <Outlet />
-                        </div>
-                    </RequireAuth>
-                }
-            >
+    return (
+        <>
+            <Confirmator />
+            <Routes>
                 <Route
-                    index
-                    element={<RequireAuth><AdvertsPage /></RequireAuth>}
+                    path='/login'
+                    element={<LoginPage />}
                 />
                 <Route
-                    path=':adId'
-                    element={<RequireAuth><AdvertPage /></RequireAuth>}
+                    path='/adverts'
+                    element={
+                        <RequireAuth>
+                            <div className='container'>
+                                <Outlet />
+                            </div>
+                        </RequireAuth>
+                    }
+                >
+                    <Route
+                        index
+                        element={
+                            <RequireAuth>
+                                <AdvertsPage />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path=':adId'
+                        element={
+                            <RequireAuth>
+                                <AdvertPage />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path='new'
+                        element={
+                            <RequireAuth>
+                                <NewAdvertPage />
+                            </RequireAuth>
+                        }
+                    />
+                </Route>
+                <Route
+                    path='/'
+                    element={<Navigate to='/adverts' />}
                 />
                 <Route
-                    path='new'
-                    element={<RequireAuth><NewAdvertPage /></RequireAuth>}
+                    path='/404'
+                    element={<NotFoundPage />}
                 />
-            </Route>
-            <Route path='/' element={<Navigate to='/adverts' />} />
-            <Route path="/404" element={<NotFoundPage/>} />
-        <Route path="*" element={<Navigate to="/404" />} />
-        </Routes>
+                <Route
+                    path='*'
+                    element={<Navigate to='/404' />}
+                />
+            </Routes>
         </>
     );
 }

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 interface IButton {
-    customheight?: string;
-    customwidth?: string;
-    variant?: string;
+    $customheight?: string;
+    $customwidth?: string;
+    $variant?: string;
 }
 
 const Button = styled.button<IButton>`
@@ -15,14 +15,14 @@ const Button = styled.button<IButton>`
     text-align: center;
     display: inline-block;
     font-size: 16px;
-    height: ${(props) => props.customheight || 'fit-content'};
-    width: ${(props) => props.customwidth || 'fit-content'};
+    height: ${(props) => props.$customheight || 'fit-content'};
+    width: ${(props) => props.$customwidth || 'fit-content'};
     &:hover {
         transform: scale(0.96);
     }
     &:disabled {
         cursor: not-allowed;
-        opacity: .5;
+        opacity: 0.5;
         transform: scale(1);
         background-color: var(--accent-200);
         color: var(--text-200);

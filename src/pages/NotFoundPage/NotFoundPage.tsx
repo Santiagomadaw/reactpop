@@ -6,7 +6,10 @@ export default function NotFoundPage() {
     return (
         <Layout>
             <StyledNotFound>
-                <Link className='notfound' to='/adverts'>
+                <Link
+                    className='notfound'
+                    to='/adverts'
+                >
                     <h1>404</h1>
                     <hr></hr>
                     <h3>Not Found</h3>
@@ -16,7 +19,7 @@ export default function NotFoundPage() {
     );
 }
 
-const StyledNotFound=styled.div`
+const StyledNotFound = styled.div`
 
 display: flex;
 

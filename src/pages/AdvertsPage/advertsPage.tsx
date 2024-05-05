@@ -8,9 +8,13 @@ import { useFilterContext } from '../../context/filterContext/filterCustomHook.t
 import ErrorMessage from '../../components/shared/ErrorMessage.tsx';
 import Button from '../../components/shared/Button.tsx';
 import Noad from './components/Noad.tsx';
-
+function findHighestPrice(ads: IAds[]): number {
+    return ads.reduce((maxPrice, ad) => {
+        return ad.price > maxPrice ? ad.price : maxPrice;
+    }, 0);
+}
 export default function AdvertsPage() {
-    const { filtersState } = useFilterContext();
+    const { filtersState, updateFilters } = useFilterContext();
     const [ads, setAds] = useState<IAds[]>([]);
     const [error, setError] = useState<string | null>(null);
     const resetError = () => setError(null);
@@ -19,6 +23,8 @@ export default function AdvertsPage() {
             try {
                 const ads = await getAds();
                 setAds(ads.data);
+                const maxprice = findHighestPrice(ads.data);
+                updateFilters({ ...filtersState, price: [0, maxprice] });
             } catch (error) {
                 if (error) {
                     const msg: string = (error as Error).message;
@@ -27,6 +33,8 @@ export default function AdvertsPage() {
             }
         };
         getDatad();
+        const maxprice = findHighestPrice(ads);
+        updateFilters({ ...filtersState, price: [0, maxprice] });
     }, []);
 
     const FilterOption = (filtersState: IpropsFilter): IAds[] => {
@@ -42,20 +50,24 @@ export default function AdvertsPage() {
         // Filter by name
         if (filtersState.search) {
             filteredAds = filteredAds.filter((ad) =>
-                ad.name.includes(filtersState.search)
+                ad.name.includes(filtersState.search),
             );
         }
         // Filter by tags
         if (filtersState.tags) {
             filteredAds = filteredAds.filter((ad) =>
-                filtersState.tags.every((tag) => { return ad.tags.includes(tag)})
-                );
-                
+                filtersState.tags.every((tag) => {
+                    return ad.tags.includes(tag);
+                }),
+            );
         }
         if (filtersState.price) {
             filteredAds = filteredAds.filter((ad) => {
                 if (Array.isArray(filtersState.price)) {
-                    return ad.price >= filtersState.price[0] && ad.price <= filtersState.price[1];
+                    return (
+                        ad.price >= filtersState.price[0] &&
+                        ad.price <= filtersState.price[1]
+                    );
                 }
                 return false;
             });
@@ -66,21 +78,29 @@ export default function AdvertsPage() {
     let sellAds = ads;
     if (filtersState) {
         sellAds = FilterOption(filtersState);
-        Button
+        Button;
     }
     return (
         <Layout>
             <StyledAdList className='ad-list'>
-                {sellAds.length>0 ?
+                {sellAds.length > 0 ? (
                     sellAds.map((ad, index) => (
-                        <SingleAd key={index} {...ad} />
-                    )) : (<Noad/>)}
-                {error && <ErrorMessage
+                        <SingleAd
+                            key={index}
+                            {...ad}
+                        />
+                    ))
+                ) : (
+                    <Noad />
+                )}
+                {error && (
+                    <ErrorMessage
                         className='loginPage-error'
                         onClick={resetError}
                     >
                         <h3>{error.toUpperCase()}</h3>
-                    </ErrorMessage>}
+                    </ErrorMessage>
+                )}
             </StyledAdList>
         </Layout>
     );
@@ -93,11 +113,11 @@ const StyledAdList = styled.div`
     gap: 10px;
     grid-template-columns: repeat(auto-fit, 235px);
     padding-top: 50px;
-    
+
     &:has(.no-ad[noad]) {
         display: flex;
     }
-    }
+
     .no-ad {
         color: silver;
         text-wrap: nowrap;

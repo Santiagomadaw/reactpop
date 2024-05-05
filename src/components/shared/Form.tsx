@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 interface IForm {
-    customheight?: string;
-    customwidth?: string;
-    variant?: string;
+    $customheight?: string;
+    $customwidth?: string;
+    $variant?: string;
 }
 
 const Form = styled.form<IForm>`
@@ -11,16 +11,15 @@ const Form = styled.form<IForm>`
     width: 60%;
     align-items: center;
     align-items: center;
-    height: ${(props) => props.customheight || 'fit-content'};
-    width: ${(props) => props.customwidth || '80%'};
+    height: ${(props) => props.$customheight || 'fit-content'};
+    width: ${(props) => props.$customwidth || '80%'};
     gap: 10px;
     h4{
         color:var(--text-100);
     }
     ${(props) =>
-        props.variant === 'column'
-            ? 
-            `&{
+        props.$variant === 'column'
+            ? `&{
             display: flex;
             gap: 12px;
             flex-direction: column;
@@ -29,9 +28,7 @@ const Form = styled.form<IForm>`
             & .signUpButton{
                 margin-top: 1rem;
             }`
-            : 
-            ')'
-        };
+            : ''};
     }
     
 `;
