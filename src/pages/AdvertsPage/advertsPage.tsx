@@ -52,8 +52,9 @@ export default function AdvertsPage() {
         }
         // Filter by name
         if (filtersState.search) {
+            const searchLowercase = filtersState.search.toLowerCase();
             filteredAds = filteredAds.filter((ad) =>
-                ad.name.includes(filtersState.search),
+                ad.name.toLowerCase().startsWith(searchLowercase)
             );
         }
         // Filter by tags
