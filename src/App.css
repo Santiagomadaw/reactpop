@@ -26,7 +26,9 @@ main {
 main::-webkit-scrollbar {
     display: none;
 }
-:roost {
+/* Posible modo claro
+ */
+ :rootLight {
     --primary-100: #103629;
     --primary-200: #3d3d3d;
     --primary-300: #ffffff;

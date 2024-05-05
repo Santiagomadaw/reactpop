@@ -1,6 +1,6 @@
 # Dashboard de Anuncios - Práctica de Fundamentos de React con Vite y TypeScript
 
-¡Bienvenido al proyecto de Dashboard de Anuncios! Este proyecto, desarrollado con Vite, TypeScript y React, te ofrece una aplicación de dashboard para gestionar el API de anuncios Nodepop. 
+¡Bienvenido al proyecto de Dashboard de Anuncios! Este proyecto, desarrollado con Vite, TypeScript y React, te ofrece una aplicación de dashboard para gestionar el API de anuncios Nodepop.
 
 ## Descripción del Proyecto
 
@@ -42,7 +42,5 @@ Además, se ha implementado un componente para el logout cuando el usuario está
 
 - **Estilos**: Se han utilizado styled-components para los estilos de la aplicación, proporcionando una forma flexible y eficiente de gestionar los estilos en los componentes de React.
 - **Código**: Para asegurar código limpio y bien organizado se ha usado Prettier y aprovechando las ventajas de TypeScript para una tipificación sólida y segura.
-
-
 
 ---

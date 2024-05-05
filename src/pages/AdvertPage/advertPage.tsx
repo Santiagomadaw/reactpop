@@ -78,7 +78,7 @@ export default function AdvertPage() {
                             {ad.photo ? (
                                 <img
                                     src={ad.photo}
-                                    alt={'Imagen de' + name}
+                                    alt={'Imagen de' + ad.name}
                                 />
                             ) : (
                                 <img

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-
 export default function Footer() {
     return (
         <StyledFooter>
-            <h2>This is the footer</h2>
+            <p>Powered by React + Vite + Typescript</p>
+
         </StyledFooter>
     );
 }
@@ -16,6 +16,6 @@ const StyledFooter = styled.footer`
     color: var(--text-100);
     border-top: 1px solid var(--text-100);
     p {
-        font-size: xx-large;
+        font-size: medium;
     }
 `;
