@@ -38,7 +38,6 @@ export default function AdvertsPage() {
             }
         };
         getDatad();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const FilterOption = (filtersState: IpropsFilter): IAds[] => {
@@ -53,9 +52,9 @@ export default function AdvertsPage() {
         }
         // Filter by name
         if (filtersState.search) {
-            const searchLowercase = filtersState.search.toLowerCase();
+            const searchTerm = filtersState.search.toLowerCase();
             filteredAds = filteredAds.filter((ad) =>
-                ad.name.toLowerCase().startsWith(searchLowercase)
+                ad.name.toLowerCase().includes(searchTerm),
             );
         }
         // Filter by tags
